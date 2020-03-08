@@ -2,13 +2,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationService {
 
+  static final _sharedInstance = AuthenticationService();
+
   final _auth = FirebaseAuth.instance;
 
-  Stream<FirebaseUser> get userStream {
-    return _auth.onAuthStateChanged;
+  static Stream<FirebaseUser> get userStream {
+    return _sharedInstance._auth.onAuthStateChanged;
   }
 
-  void signIn(email, password) async {
-    _auth.signInWithEmailAndPassword(email: email, password: password);
+  static void signIn(email, password) async {
+    _sharedInstance._auth.signInWithEmailAndPassword(email: email, password: password);
+  }
+
+  static void signOut() async {
+    _sharedInstance._auth.signOut();
   }
 }
