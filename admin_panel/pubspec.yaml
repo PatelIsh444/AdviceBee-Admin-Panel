@@ -27,6 +27,7 @@ dependencies:
   firebase_auth_web:
   cloud_firestore:
   cloud_firestore_web:
+  provider:
 
 
 dev_dependencies:
