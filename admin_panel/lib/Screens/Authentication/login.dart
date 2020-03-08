@@ -16,10 +16,11 @@ class _LogInState extends State<LogIn> {
       body: Center(
         child: Container(
           width: 300,
-          height: 220,
           color: Colors.orangeAccent,
           padding: EdgeInsets.all(25),
-          child: Column(
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            direction: Axis.horizontal,
             children: [
               Form(
                 child: Column(
@@ -44,7 +45,7 @@ class _LogInState extends State<LogIn> {
                   ],
                 ),
               ),
-              SizedBox(height: 25),
+              SizedBox(height: 24, width: double.infinity),
               MaterialButton(
                 child: Text("Log in"),
                 onPressed: () async {
