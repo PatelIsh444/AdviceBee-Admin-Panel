@@ -10,7 +10,7 @@ class AuthenticationService {
     return _sharedInstance._auth.onAuthStateChanged;
   }
 
-  static void signIn(email, password) async {
+  static void signIn(String email, String password) async {
     _sharedInstance._auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
