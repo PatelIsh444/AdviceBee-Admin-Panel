@@ -22,6 +22,8 @@ class _LogInState extends State<LogIn> {
             alignment: WrapAlignment.center,
             direction: Axis.horizontal,
             children: [
+              Text("Log In"),
+              SizedBox(height: 24, width: double.infinity),
               Form(
                 child: Column(
                   children: [
