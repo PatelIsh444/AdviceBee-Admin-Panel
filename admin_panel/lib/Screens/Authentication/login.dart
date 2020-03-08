@@ -1,7 +1,15 @@
 import 'package:admin_panel/Services/authentication_service.dart';
 import 'package:flutter/material.dart';
 
-class LogIn extends StatelessWidget {
+class LogIn extends StatefulWidget {
+  @override
+  _LogInState createState() => _LogInState();
+}
+
+class _LogInState extends State<LogIn> {
+  String email = '';
+  String password = '';
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +29,7 @@ class LogIn extends StatelessWidget {
                         hintText: "Email"
                       ),
                       onChanged: (value) async {
-                      // TODO: setState
+                        setState(() => email = value);
                       },
                     ),                
                     TextFormField(
@@ -30,7 +38,7 @@ class LogIn extends StatelessWidget {
                       ),
                       obscureText: true,
                       onChanged: (value) async {
-                        // TODO: setState
+                        setState(() => password = value);
                       },
                     )
                   ],
@@ -40,7 +48,7 @@ class LogIn extends StatelessWidget {
               MaterialButton(
                 child: Text("Log in"),
                 onPressed: () async {
-                  // TODO: Sign in
+                  AuthenticationService.signIn(email, password);
                 },
               )
             ],
