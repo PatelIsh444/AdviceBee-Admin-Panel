@@ -26,5 +26,25 @@
     }
   </script>
   <script src="main.dart.js" type="application/javascript"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-firestore.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyDsxJ7SEmI3ShUTEKfYM90C7H4WPcX7WfQ",
+      authDomain: "advicebee-9f277.firebaseapp.com",
+      databaseURL: "https://advicebee-9f277.firebaseio.com",
+      projectId: "advicebee-9f277",
+      storageBucket: "advicebee-9f277.appspot.com",
+      messagingSenderId: "853359482568",
+      appId: "1:853359482568:web:6b052f8561a56a6538f7fd",
+      measurementId: "G-WH93CKRWKG"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
 </body>
 </html>
