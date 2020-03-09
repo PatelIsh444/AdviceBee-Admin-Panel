@@ -26,6 +26,9 @@ class _HomeState extends State<Home> {
             UserAccountsDrawerHeader(
               accountName: Text(accountName),
               accountEmail: Text(accountEmail),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage("https://pbs.twimg.com/profile_images/893885309292732416/c7mWp3xT_400x400.jpg")
+              )
             ),
           ],
         );
