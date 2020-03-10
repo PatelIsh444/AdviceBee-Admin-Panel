@@ -12,7 +12,7 @@ class Overview extends StatelessWidget {
             borderRadius: BorderRadius.circular(14.0),
             child: Container(
               color: Colors.white,
-              width: 250,
+              width: 150,
               height: 100,
               child: Padding(
                 padding: EdgeInsets.all(12),
@@ -20,18 +20,20 @@ class Overview extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "# of Reports",
+                      "Reports",
                       style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 32
+                        fontWeight: FontWeight.w200,
+                        fontSize: 20,
+                        color: Colors.grey
                       ),
                     ),
+                    SizedBox(height: 8),
                     StreamBuilder(
                       stream: Firestore.instance.collectionGroup("ReportedUsers").snapshots(), 
                       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                         final style = TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 32
+                            fontWeight: FontWeight.w600,
+                            fontSize: 38
                         );
 
                         if (snapshot.hasData) {
