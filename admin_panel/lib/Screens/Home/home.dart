@@ -1,3 +1,4 @@
+import 'package:admin_panel/Screens/Overview/overview.dart';
 import 'package:admin_panel/Services/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,15 @@ class _HomeState extends State<Home> {
       body: IndexedStack(
         index: _currentIndex,
         children: <Widget>[
-          Container(color: Colors.blue[300]),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.all(25),
+              child: Overview()
+            )
+          ),
           Container(color: Colors.red[300]),
         ],
       ),
