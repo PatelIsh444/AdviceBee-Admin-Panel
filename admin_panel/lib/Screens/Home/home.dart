@@ -1,5 +1,6 @@
 import 'package:admin_panel/Screens/Overview/overview.dart';
 import 'package:admin_panel/Services/authentication_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:navigation_rail/navigation_rail.dart';
@@ -16,20 +17,33 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<FirebaseUser>(context);
-    final accountName = (user != null) ? user.displayName ?? "Unknown Name" : "Unknown Name";
-    final accountEmail = (user != null) ? user.email ??  "Unknown Email" : "Unknown Email";
 
     return NavigationRail(
       title: Text("Admin Panel"),
       drawerHeaderBuilder: (context) {
         return Column(
           children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text(accountName),
-              accountEmail: Text(accountEmail),
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage("https://pbs.twimg.com/profile_images/893885309292732416/c7mWp3xT_400x400.jpg")
-              )
+            FutureBuilder(
+              future: Firestore.instance.collection("users").document(user.uid).get(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                String accountName = "Unknown Name";
+                String accountEmail = "Unknown Email";
+                String thumbnailPicURL = "https://pbs.twimg.com/profile_images/893885309292732416/c7mWp3xT_400x400.jpg";
+
+                if (snapshot.hasData) {
+                  accountName = snapshot.data["displayName"];
+                  accountEmail = snapshot.data["email"];
+                  thumbnailPicURL = snapshot.data["thumbnailPicURL"];
+                }
+                
+                return UserAccountsDrawerHeader(
+                  accountName: Text(accountName),
+                  accountEmail: Text(accountEmail),
+                  currentAccountPicture: CircleAvatar(
+                    backgroundImage: NetworkImage(thumbnailPicURL)
+                  )
+                );
+              }
             ),
           ],
         );
