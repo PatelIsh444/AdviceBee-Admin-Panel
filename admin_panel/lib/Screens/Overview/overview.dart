@@ -1,0 +1,60 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
+class Overview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(14.0),
+            child: Container(
+              color: Colors.white,
+              width: 250,
+              height: 100,
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "# of Reports",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 32
+                      ),
+                    ),
+                    StreamBuilder(
+                      stream: Firestore.instance.collectionGroup("ReportedUsers").snapshots(), 
+                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        final style = TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 32
+                        );
+
+                        if (snapshot.hasData) {
+                          return Text(
+                            snapshot.data.documents.length.toString(),
+                            style: style,
+                          );
+                        }
+                        else {
+                          return Text(
+                            "--",
+                            style: style,
+                          );
+                        }
+                      },
+                    )
+                  ],
+                )
+              ) 
+            ),
+          )
+        ],
+      )
+    );
+  }
+}
