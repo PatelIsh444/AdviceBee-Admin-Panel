@@ -1,4 +1,5 @@
 import 'package:admin_panel/Screens/Overview/overview.dart';
+import 'package:admin_panel/Screens/Reports/reports.dart';
 import 'package:admin_panel/Services/authentication_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -60,7 +61,7 @@ class _HomeState extends State<Home> {
               child: Overview()
             )
           ),
-          Container(color: Colors.red[300]),
+          Reports(),
         ],
       ),
       tabs: [
