@@ -29,7 +29,7 @@ class Overview extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     StreamBuilder(
-                      stream: Firestore.instance.collectionGroup("ReportedUsers").snapshots(), 
+                      stream: Firestore.instance.collection("reports").snapshots(), 
                       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                         final style = TextStyle(
                             fontWeight: FontWeight.w600,
