@@ -29,6 +29,7 @@ dependencies:
   cloud_firestore_web:
   provider:
   navigation_rail:
+  flutter_staggered_grid_view:
 
 
 dev_dependencies:
