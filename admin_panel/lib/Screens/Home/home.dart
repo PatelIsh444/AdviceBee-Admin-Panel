@@ -61,7 +61,15 @@ class _HomeState extends State<Home> {
               child: Overview()
             )
           ),
-          Reports(),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.all(25),
+              child: Reports(),
+            )
+          ),
         ],
       ),
       tabs: [
