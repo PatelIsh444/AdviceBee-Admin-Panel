@@ -10,50 +10,61 @@ class Reports extends StatelessWidget {
         if (snapshot.hasData) {
           return Wrap(
             children: snapshot.data.documents.map((element) {
-              return Container(
-                color: Colors.white,
-                width: 250,
-                child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        element["postTitle"] ?? "N/A",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 30,
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      FutureBuilder(
-                        future: Firestore.instance.collection('users').document(element["postCreatedBy"]).get(), 
-                        builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {  
-                          if (snapshot.hasData) {
-                            return Text(
-                              "Posted By: " + snapshot.data.data["displayName"],
-                              style: TextStyle(
-                                fontWeight: FontWeight.w200,
-                                fontSize: 14,
-                                color: Colors.grey
-                              ),
-                            );
-                          }
-                          else {
-                            return Text(
-                              "Loading post creator's name",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w200,
-                                fontSize: 14,
-                                color: Colors.grey
-                              ),
-                            );
-                          }
-                        }, 
+              return MouseRegion(
+                onEnter: (event) {
+                  print("Enter");
+                },
+                onExit: (event) {
+                  print("Exit");
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(14.0),
+                  child: Container(
+                    color: Colors.white,
+                    width: 250,
+                    child: Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            element["postTitle"] ?? "N/A",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 30,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          FutureBuilder(
+                            future: Firestore.instance.collection('users').document(element["postCreatedBy"]).get(), 
+                            builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {  
+                              if (snapshot.hasData) {
+                                return Text(
+                                  "Posted By: " + snapshot.data.data["displayName"],
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 14,
+                                    color: Colors.grey
+                                  ),
+                                );
+                              }
+                              else {
+                                return Text(
+                                  "Loading post creator's name",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 14,
+                                    color: Colors.grey
+                                  ),
+                                );
+                              }
+                            }, 
+                          )
+                        ]
                       )
-                    ]
-                  )
-                )
+                    )
+                  ),
+                ),
               );
             }).toList()
           );
