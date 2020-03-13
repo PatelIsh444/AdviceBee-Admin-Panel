@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,8 @@ class _ReportsState extends State<Reports> {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {  
         if (snapshot.hasData) {
           return Wrap(
+            spacing: 14,
+            runSpacing: 14,
             children: snapshot.data.documents.map((element) {
               return MouseRegion(
                 onEnter: (event) {
@@ -29,17 +32,21 @@ class _ReportsState extends State<Reports> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(14),
                     ),
-                  width: 250,
+                  width: 300,
+                  height: 150,
                   child: Padding(
                     padding: EdgeInsets.all(12),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          element["postTitle"] ?? "N/A",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 30,
+                        Expanded(
+                          child: AutoSizeText(
+                            element["postTitle"] ?? "N/A",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 30,
+                            ),
+                            // maxLines: 1,
                           ),
                         ),
                         SizedBox(height: 8),
