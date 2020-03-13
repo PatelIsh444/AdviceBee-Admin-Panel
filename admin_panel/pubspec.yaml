@@ -29,7 +29,7 @@ dependencies:
   cloud_firestore_web:
   provider:
   navigation_rail:
-
+  auto_size_text:
 
 dev_dependencies:
   flutter_test:
