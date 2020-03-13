@@ -12,27 +12,46 @@ class Reports extends StatelessWidget {
             children: snapshot.data.documents.map((element) {
               return Container(
                 color: Colors.white,
-                width: 150,
-                height: 100,
+                width: 250,
                 child: Padding(
                   padding: EdgeInsets.all(12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(element["postTitle"] ?? "N/A"),
+                      Text(
+                        element["postTitle"] ?? "N/A",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 30,
+                        ),
+                      ),
                       SizedBox(height: 8),
                       FutureBuilder(
                         future: Firestore.instance.collection('users').document(element["postCreatedBy"]).get(), 
                         builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {  
                           if (snapshot.hasData) {
-                            return Text(snapshot.data.data["displayName"]);
+                            return Text(
+                              "Posted By: " + snapshot.data.data["displayName"],
+                              style: TextStyle(
+                                fontWeight: FontWeight.w200,
+                                fontSize: 14,
+                                color: Colors.grey
+                              ),
+                            );
                           }
                           else {
-                            return Text("Loading post creator's name");
+                            return Text(
+                              "Loading post creator's name",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w200,
+                                fontSize: 14,
+                                color: Colors.grey
+                              ),
+                            );
                           }
                         }, 
-                      )    
-                    ]              
+                      )
+                    ]
                   )
                 )
               );
