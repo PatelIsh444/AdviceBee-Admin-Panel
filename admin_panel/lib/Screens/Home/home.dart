@@ -20,6 +20,7 @@ class _HomeState extends State<Home> {
     final user = Provider.of<FirebaseUser>(context);
 
     return NavigationRail(
+      hideTitleBar: true,
       title: Text("Admin Panel"),
       drawerHeaderBuilder: (context) {
         return Column(
