@@ -8,7 +8,6 @@ class Reports extends StatefulWidget {
 }
 
 class _ReportsState extends State<Reports> {
-  bool isHovering = false;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -37,7 +36,6 @@ class _ReportsState extends State<Reports> {
   Container _generateReportCell(DocumentSnapshot element) {
     return Container(
       decoration: BoxDecoration(
-          boxShadow: isHovering ? kElevationToShadow[1] : [],
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
         ),
