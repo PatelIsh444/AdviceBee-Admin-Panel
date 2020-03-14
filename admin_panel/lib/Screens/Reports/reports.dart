@@ -41,8 +41,8 @@ class _ReportsState extends State<Reports> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
         ),
-      width: 300,
-      height: 150,
+      width: 450,
+      height: 175,
       child: Padding(
         padding: EdgeInsets.all(12),
         child: Column(
@@ -64,7 +64,7 @@ class _ReportsState extends State<Reports> {
         element["postTitle"] ?? "N/A",
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          fontSize: 30,
+          fontSize: 25,
         ),
       ),
     );
