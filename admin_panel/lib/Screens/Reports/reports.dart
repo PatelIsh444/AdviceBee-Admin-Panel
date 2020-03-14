@@ -74,7 +74,8 @@ class _ReportsState extends State<Reports> {
                               );
                             }
                           }, 
-                        )
+                        ),
+                        _generateActionRow()
                       ]
                     )
                   )
@@ -89,4 +90,26 @@ class _ReportsState extends State<Reports> {
       }, 
     );
   }
+
+  Row _generateActionRow() {
+    return Row(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(8),
+          child: RaisedButton(
+            child: Text("View"),
+            onPressed: () => print("View Tapped"),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(8),
+          child: RaisedButton(
+            child: Text("Delete"),
+            onPressed: () => print("Delete Tapped"),
+          ),
+        )
+      ],
+    );
+  }
 }
+
