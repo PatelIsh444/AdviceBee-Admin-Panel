@@ -66,7 +66,6 @@ class _ReportsState extends State<Reports> {
           fontWeight: FontWeight.w600,
           fontSize: 30,
         ),
-        // maxLines: 1,
       ),
     );
   }
