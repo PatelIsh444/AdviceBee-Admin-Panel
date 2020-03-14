@@ -1,3 +1,4 @@
+import 'package:admin_panel/Screens/Reports/report_details.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -105,7 +106,19 @@ class _ReportsState extends State<Reports> {
           padding: EdgeInsets.all(8),
           child: RaisedButton(
             child: Text("View"),
-            onPressed: () => print("View Tapped"),
+            onPressed: () {
+              showDialog(
+                context: context,
+                child: AlertDialog(
+                  contentPadding: EdgeInsets.zero,
+                  content: SizedBox(
+                    width: 500,
+                    height: 500,
+                    child: ReportDetails()
+                  ),
+                )
+              );
+            }
           ),
         ),
         Padding(
