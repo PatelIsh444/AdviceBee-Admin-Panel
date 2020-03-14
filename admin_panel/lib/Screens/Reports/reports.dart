@@ -14,7 +14,7 @@ class _ReportsState extends State<Reports> {
       stream: Firestore.instance.collection("reports").snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {  
         if (snapshot.hasData) {
-          return _generateGrid(snapshot);
+          return _generateReportsView(snapshot);
         }
         else {
           return Text("Loading...");
@@ -23,7 +23,7 @@ class _ReportsState extends State<Reports> {
     );
   }
 
-  Widget _generateGrid(AsyncSnapshot<QuerySnapshot> snapshot) {
+  Widget _generateReportsView(AsyncSnapshot<QuerySnapshot> snapshot) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
