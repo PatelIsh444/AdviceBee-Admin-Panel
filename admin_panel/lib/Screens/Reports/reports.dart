@@ -50,12 +50,7 @@ class _ReportsState extends State<Reports> {
           children: <Widget>[
             _generateReportedPostHeader(element),
             SizedBox(height: 8),
-            FutureBuilder(
-              future: Firestore.instance.collection('users').document(element["postCreatedBy"]).get(), 
-              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {  
-                return _generateUserDisplayName(snapshot);
-              }, 
-            ),
+            _generateUserDisplayName(element),
             _generateActionRow()
           ]
         )
@@ -76,27 +71,32 @@ class _ReportsState extends State<Reports> {
     );
   }
 
-  Text _generateUserDisplayName(AsyncSnapshot<DocumentSnapshot> snapshot) {
-    if (snapshot.hasData) {
-      return Text(
-        "Posted By: " + snapshot.data.data["displayName"],
-        style: TextStyle(
-          fontWeight: FontWeight.w200,
-          fontSize: 14,
-          color: Colors.grey
-        ),
-      );
-    }
-    else {
-      return Text(
-        "Loading post creator's name",
-        style: TextStyle(
-          fontWeight: FontWeight.w200,
-          fontSize: 14,
-          color: Colors.grey
-        ),
-      );
-    }
+  Widget _generateUserDisplayName(DocumentSnapshot element) {
+    return FutureBuilder(
+      future: Firestore.instance.collection('users').document(element["postCreatedBy"]).get(), 
+      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {  
+        if (snapshot.hasData) {
+          return Text(
+            "Posted By: " + snapshot.data.data["displayName"],
+            style: TextStyle(
+              fontWeight: FontWeight.w200,
+              fontSize: 14,
+              color: Colors.grey
+            ),
+          );
+        }
+        else {
+          return Text(
+            "Loading post creator's name",
+            style: TextStyle(
+              fontWeight: FontWeight.w200,
+              fontSize: 14,
+              color: Colors.grey
+            ),
+          );
+        }      
+      }, 
+    );
   }
 
   Row _generateActionRow() {
