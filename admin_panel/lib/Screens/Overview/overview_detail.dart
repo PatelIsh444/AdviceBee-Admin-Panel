@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 class OverviewDetail extends StatelessWidget {
   const OverviewDetail({
-    Key key,
+    Key key, this.title, this.detail,
   }) : super(key: key);
+
+  final String title;
+  final String detail;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class OverviewDetail extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "Reports",
+                title,
                 style: TextStyle(
                   fontWeight: FontWeight.w200,
                   fontSize: 20,
@@ -27,6 +30,13 @@ class OverviewDetail extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8),
+              Text(
+                detail,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 38
+                ),
+              )
             ]
           )
         )
