@@ -98,7 +98,7 @@ class _ReportsState extends State<Reports> {
     );
   }
 
-  Row _generateActionRow() {
+  Widget _generateActionRow() {
     return Row(
       children: <Widget>[
         Padding(
@@ -112,7 +112,25 @@ class _ReportsState extends State<Reports> {
           padding: EdgeInsets.all(8),
           child: RaisedButton(
             child: Text("Delete"),
-            onPressed: () => print("Delete Tapped"),
+            onPressed: () {
+              showDialog(
+                context: context,
+                child: AlertDialog(
+                  title: Text("Confirm"),
+                  content: Text("Are you sure you wish to delete this item?"),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("DELETE"),
+                      onPressed: () => Navigator.of(context).pop(true)
+                    ),
+                    FlatButton(
+                      child: Text("CANCEL"),
+                      onPressed: () => Navigator.of(context).pop(false)
+                    ),
+                  ],
+                )
+              );
+            },
           ),
         )
       ],
