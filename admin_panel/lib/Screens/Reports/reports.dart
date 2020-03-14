@@ -51,7 +51,7 @@ class _ReportsState extends State<Reports> {
             _generateReportedPostHeader(element),
             SizedBox(height: 8),
             _generateUserDisplayName(element),
-            _generateActionRow()
+            _generateActionRow(element)
           ]
         )
       )
@@ -98,7 +98,7 @@ class _ReportsState extends State<Reports> {
     );
   }
 
-  Widget _generateActionRow() {
+  Widget _generateActionRow(DocumentSnapshot element) {
     return Row(
       children: <Widget>[
         Padding(
@@ -121,7 +121,10 @@ class _ReportsState extends State<Reports> {
                   actions: <Widget>[
                     FlatButton(
                       child: Text("DELETE"),
-                      onPressed: () => Navigator.of(context).pop(true)
+                      onPressed: () async {
+                        await element.reference.delete();
+                        Navigator.of(context).pop(true);
+                      } 
                     ),
                     FlatButton(
                       child: Text("CANCEL"),
