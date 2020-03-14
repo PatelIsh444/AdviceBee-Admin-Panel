@@ -29,61 +29,65 @@ class _ReportsState extends State<Reports> {
       spacing: 14,
       runSpacing: 14,
       children: snapshot.data.documents.map((element) {
-        return Container(
-          decoration: BoxDecoration(
-              boxShadow: isHovering ? kElevationToShadow[1] : [],
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(14),
-            ),
-          width: 300,
-          height: 150,
-          child: Padding(
-            padding: EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: AutoSizeText(
-                    element["postTitle"] ?? "N/A",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 30,
-                    ),
-                    // maxLines: 1,
-                  ),
-                ),
-                SizedBox(height: 8),
-                FutureBuilder(
-                  future: Firestore.instance.collection('users').document(element["postCreatedBy"]).get(), 
-                  builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {  
-                    if (snapshot.hasData) {
-                      return Text(
-                        "Posted By: " + snapshot.data.data["displayName"],
-                        style: TextStyle(
-                          fontWeight: FontWeight.w200,
-                          fontSize: 14,
-                          color: Colors.grey
-                        ),
-                      );
-                    }
-                    else {
-                      return Text(
-                        "Loading post creator's name",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w200,
-                          fontSize: 14,
-                          color: Colors.grey
-                        ),
-                      );
-                    }
-                  }, 
-                ),
-                _generateActionRow()
-              ]
-            )
-          )
-        );
+        return _generateReportCell(element);
       }).toList()
+    );
+  }
+
+  Container _generateReportCell(DocumentSnapshot element) {
+    return Container(
+      decoration: BoxDecoration(
+          boxShadow: isHovering ? kElevationToShadow[1] : [],
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+        ),
+      width: 300,
+      height: 150,
+      child: Padding(
+        padding: EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: AutoSizeText(
+                element["postTitle"] ?? "N/A",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 30,
+                ),
+                // maxLines: 1,
+              ),
+            ),
+            SizedBox(height: 8),
+            FutureBuilder(
+              future: Firestore.instance.collection('users').document(element["postCreatedBy"]).get(), 
+              builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {  
+                if (snapshot.hasData) {
+                  return Text(
+                    "Posted By: " + snapshot.data.data["displayName"],
+                    style: TextStyle(
+                      fontWeight: FontWeight.w200,
+                      fontSize: 14,
+                      color: Colors.grey
+                    ),
+                  );
+                }
+                else {
+                  return Text(
+                    "Loading post creator's name",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w200,
+                      fontSize: 14,
+                      color: Colors.grey
+                    ),
+                  );
+                }
+              }, 
+            ),
+            _generateActionRow()
+          ]
+        )
+      )
     );
   }
 
