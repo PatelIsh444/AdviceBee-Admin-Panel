@@ -7,73 +7,77 @@ class Overview extends StatelessWidget {
     return _generateOverview();
   }
 
-  Container _generateOverview() {
+  Widget _generateOverview() {
     return Container(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          "Overview",
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 35,
-          )
-        ),
-        SizedBox(height: 12),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(14.0),
-              child: Container(
-                color: Colors.white,
-                width: 150,
-                height: 100,
-                child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Reports",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w200,
-                          fontSize: 20,
-                          color: Colors.grey
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      StreamBuilder(
-                        stream: Firestore.instance.collection("reports").snapshots(), 
-                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          final style = TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 38
-                          );
-
-                          if (snapshot.hasData) {
-                            return Text(
-                              snapshot.data.documents.length.toString(),
-                              style: style,
-                            );
-                          }
-                          else {
-                            return Text(
-                              "--",
-                              style: style,
-                            );
-                          }
-                        },
-                      )
-                    ],
-                  )
-                ) 
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "Overview",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 35,
             )
-          ],
-        ),
-      ],
-    )
-  );
+          ),
+          SizedBox(height: 12),
+          _generateOverviewDetails(),
+        ],
+      )
+    );
+  }
+
+  Row _generateOverviewDetails() {
+    return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(14.0),
+            child: Container(
+              color: Colors.white,
+              width: 150,
+              height: 100,
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Reports",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w200,
+                        fontSize: 20,
+                        color: Colors.grey
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    StreamBuilder(
+                      stream: Firestore.instance.collection("reports").snapshots(), 
+                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        final style = TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 38
+                        );
+
+                        if (snapshot.hasData) {
+                          return Text(
+                            snapshot.data.documents.length.toString(),
+                            style: style,
+                          );
+                        }
+                        else {
+                          return Text(
+                            "--",
+                            style: style,
+                          );
+                        }
+                      },
+                    )
+                  ],
+                )
+              ) 
+            ),
+          )
+        ],
+      );
   }
 }
