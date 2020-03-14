@@ -48,16 +48,7 @@ class _ReportsState extends State<Reports> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Expanded(
-              child: AutoSizeText(
-                element["postTitle"] ?? "N/A",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 30,
-                ),
-                // maxLines: 1,
-              ),
-            ),
+            _generateReportedPostHeader(element),
             SizedBox(height: 8),
             FutureBuilder(
               future: Firestore.instance.collection('users').document(element["postCreatedBy"]).get(), 
@@ -69,6 +60,19 @@ class _ReportsState extends State<Reports> {
           ]
         )
       )
+    );
+  }
+
+  Expanded _generateReportedPostHeader(DocumentSnapshot element) {
+    return Expanded(
+      child: AutoSizeText(
+        element["postTitle"] ?? "N/A",
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 30,
+        ),
+        // maxLines: 1,
+      ),
     );
   }
 
