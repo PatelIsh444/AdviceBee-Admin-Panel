@@ -23,15 +23,28 @@ class _ReportsState extends State<Reports> {
     );
   }
 
-  SingleChildScrollView _generateGrid(AsyncSnapshot<QuerySnapshot> snapshot) {
-    return SingleChildScrollView(
-      child: Wrap(
-        spacing: 14,
-        runSpacing: 14,
-        children: snapshot.data.documents.map((element) {
-          return ReportCell(element);
-        }).toList()
-      ),
+  Widget _generateGrid(AsyncSnapshot<QuerySnapshot> snapshot) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "Reports",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 35,
+          )
+        ),
+        SizedBox(height: 12),
+        SingleChildScrollView(
+          child: Wrap(
+            spacing: 14,
+            runSpacing: 14,
+            children: snapshot.data.documents.map((element) {
+              return ReportCell(element);
+            }).toList()
+          ),
+        ),
+      ],
     );
   }
 }
