@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class OverviewDetail extends StatelessWidget {
@@ -30,11 +31,13 @@ class OverviewDetail extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8),
-              Text(
-                detail,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 38
+              Expanded(
+                child: AutoSizeText(
+                  detail,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 38
+                  ),
                 ),
               )
             ]
