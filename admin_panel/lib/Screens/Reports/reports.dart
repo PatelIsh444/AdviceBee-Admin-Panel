@@ -17,11 +17,24 @@ class _ReportsState extends State<Reports> {
           return _generateReportsView(snapshot);
         }
         else {
-          return Text("Loading...");
+          return _generateLoadingIndicator();
         }
       }, 
     );
   }
+
+  Widget _generateLoadingIndicator() {
+    return Center(
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: 48),
+          CircularProgressIndicator(),
+          SizedBox(height: 8),
+          Text("Loading Reports..."),
+        ],
+      )
+    );
+  } 
 
   Widget _generateReportsView(AsyncSnapshot<QuerySnapshot> snapshot) {
     return Column(
