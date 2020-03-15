@@ -22,10 +22,7 @@ class ReportDetails extends StatelessWidget {
             ),
           ),
           SizedBox(height: 8),
-          RaisedButton(
-            onPressed: () {  },
-            child: Text("Buttttton"),
-          )
+          _generateActionRow(context, element)
         ],
       ),
     );
@@ -50,6 +47,43 @@ class ReportDetails extends StatelessWidget {
           return Text("Loading users who reported this post...");
         }
       }
+    );
+  }
+
+  Widget _generateActionRow(BuildContext context, DocumentSnapshot element) {
+    return Row(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(8),
+          child: RaisedButton(
+            child: Text("Ignore Report"),
+            onPressed: () {
+              showDialog(
+                context: context,
+                child: AlertDialog(
+                  title: Text("Confirm"),
+                  content: Text("Are you sure you wish to ignore this report?"),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("IGNORE"),
+                      onPressed: () async {
+                        await element.reference.delete();
+                        // Dismiss the AlertDialog and the ReportDetails widget as well.
+                        Navigator.of(context).pop(true);
+                        Navigator.of(context).pop(true);
+                      } 
+                    ),
+                    FlatButton(
+                      child: Text("CANCEL"),
+                      onPressed: () => Navigator.of(context).pop(false)
+                    ),
+                  ],
+                )
+              );
+            }
+          ),
+        ),
+      ],
     );
   }
 }
