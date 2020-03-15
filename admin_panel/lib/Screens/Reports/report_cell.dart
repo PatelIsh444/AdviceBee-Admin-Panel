@@ -32,7 +32,7 @@ class ReportCell extends StatelessWidget {
     );
   }
 
-    Expanded _generateReportedPostHeader(DocumentSnapshot element) {
+  Widget _generateReportedPostHeader(DocumentSnapshot element) {
     return Expanded(
       child: AutoSizeText(
         element["postTitle"] ?? "N/A",
