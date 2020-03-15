@@ -30,6 +30,7 @@ dependencies:
   provider:
   navigation_rail:
   auto_size_text:
+  intl:
 
 dev_dependencies:
   flutter_test:
