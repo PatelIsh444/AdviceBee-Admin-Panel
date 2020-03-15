@@ -87,7 +87,7 @@ class ReportCell extends StatelessWidget {
                   content: SizedBox(
                     width: 500,
                     height: 500,
-                    child: ReportDetails()
+                    child: ReportDetails(element)
                   ),
                 )
               );
