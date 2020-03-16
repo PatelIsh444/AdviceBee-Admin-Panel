@@ -19,6 +19,7 @@ class ReportDetails extends StatelessWidget {
                 children: <Widget>[
                   _generateUserDisplayName(element),
                   SizedBox(height: 8),
+                  _generateReportedPostTitle(element),
                   _generateUsersWhoReportedLIst(),
                 ],
               )
@@ -56,6 +57,16 @@ class ReportDetails extends StatelessWidget {
           );
         }      
       }, 
+    );
+  }
+
+  Widget _generateReportedPostTitle(DocumentSnapshot element) {
+    return Text(
+      element["postTitle"],
+      style: TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 25,
+      ),
     );
   }
 
