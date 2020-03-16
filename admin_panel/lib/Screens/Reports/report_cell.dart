@@ -86,7 +86,7 @@ class ReportCell extends StatelessWidget {
                   contentPadding: EdgeInsets.zero,
                   content: SizedBox(
                     width: 500,
-                    height: 500,
+                    height: 350,
                     child: ReportDetails(element)
                   ),
                 )
