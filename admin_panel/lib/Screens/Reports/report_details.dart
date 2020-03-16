@@ -15,6 +15,7 @@ class ReportDetails extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   _generateUsersWhoReportedLIst(),
                 ],
