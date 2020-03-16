@@ -17,6 +17,8 @@ class ReportDetails extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  _generateUserDisplayName(element),
+                  SizedBox(height: 8),
                   _generateUsersWhoReportedLIst(),
                 ],
               )
@@ -26,6 +28,34 @@ class ReportDetails extends StatelessWidget {
           _generateActionRow(context, element)
         ],
       ),
+    );
+  }
+
+    Widget _generateUserDisplayName(DocumentSnapshot element) {
+    return FutureBuilder(
+      future: Firestore.instance.collection('users').document(element["postCreatedBy"]).get(), 
+      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {  
+        if (snapshot.hasData) {
+          return Text(
+            "Posted By: " + snapshot.data.data["displayName"],
+            style: TextStyle(
+              fontWeight: FontWeight.w200,
+              fontSize: 16,
+              color: Colors.black45
+            ),
+          );
+        }
+        else {
+          return Text(
+            "Loading post creator's name...",
+            style: TextStyle(
+              fontWeight: FontWeight.w200,
+              fontSize: 18,
+              color: Colors.grey
+            ),
+          );
+        }      
+      }, 
     );
   }
 
