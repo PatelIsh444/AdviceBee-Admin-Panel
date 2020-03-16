@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ReportDetails extends StatelessWidget {
   final DocumentSnapshot element;
@@ -20,6 +21,7 @@ class ReportDetails extends StatelessWidget {
                   _generateUserDisplayName(element),
                   SizedBox(height: 8),
                   _generateReportedPostTitle(element),
+                  SizedBox(height: 24),
                   _generateUsersWhoReportedLIst(),
                 ],
               )
@@ -75,14 +77,34 @@ class ReportDetails extends StatelessWidget {
       stream: Firestore.instance.collection('reports').document(element.documentID).collection('ReportedUsers').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
-          return Column(
-            children: snapshot.data.documents.map((e) {
-              return Row(
+          List<Widget> children = [
+            Text(
+              "Report By:",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(height: 4,)
+          ];
+          
+          snapshot.data.documents.forEach((e) {
+            String name = e.data["userDisplayName"];
+            String reasons = (e.data["reasons"] as List).join(" & ");
+            String date = DateFormat('MMMM d, yyyy').format(new DateTime.fromMillisecondsSinceEpoch((e.data["dateReported"] as Timestamp).toDate().toLocal().millisecondsSinceEpoch));
+
+            children.add(
+              Row(
                 children: <Widget>[
-                  Text("Reported By: " + e.data["userDisplayName"] + " for " + (e.data["reasons"] as List).join(" & ")),
+                  Text("$name for $reasons on $date"),
                 ]
-              );
-            }).toList(),
+              )
+            );
+          });
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: children
           );
         }
         else {
