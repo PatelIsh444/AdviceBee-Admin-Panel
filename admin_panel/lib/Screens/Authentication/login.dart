@@ -18,7 +18,7 @@ class _LogInState extends State<LogIn> {
     return Scaffold(
       key: _scaffoldKey,
       body: Container(
-        color: Colors.black,
+        color: Colors.grey[300],
         child: Center(
           child: Container(
             width: 300,
