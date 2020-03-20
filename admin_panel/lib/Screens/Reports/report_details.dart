@@ -162,4 +162,33 @@ class ReportDetails extends StatelessWidget {
         ),
       );
   }
+
+  Future<void> _deletePost(DocumentSnapshot reportedPost) async {
+    String postLocation = reportedPost.data["postLocation"];
+
+    if (postLocation == "topics") {
+      _deletePostInTopicsCollection(reportedPost);
+    }
+    else {
+      _deletePostInGroupsCollection(reportedPost);
+    }
+  }
+
+  void _deletePostInTopicsCollection(DocumentSnapshot reportedPost) async {
+    Firestore.instance
+      .collection("topics")
+      .document(reportedPost.data["postLocationId"])
+      .collection("topicQuestions")
+      .document(reportedPost.documentID)
+      .delete();
+  }
+
+  void _deletePostInGroupsCollection(DocumentSnapshot reportedPost) async {
+    Firestore.instance
+      .collection("groups")
+      .document(reportedPost.data["postLocationId"])
+      .collection("groupQuestions")
+      .document(reportedPost.documentID)
+      .delete();
+  }
 }
