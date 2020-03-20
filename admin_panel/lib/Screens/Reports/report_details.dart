@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -96,7 +97,9 @@ class ReportDetails extends StatelessWidget {
             children.add(
               Row(
                 children: <Widget>[
-                  Text("$name for $reasons on $date"),
+                  Expanded(
+                    child: AutoSizeText("$name for $reasons on $date")
+                  ),
                 ]
               )
             );
