@@ -131,6 +131,34 @@ class ReportDetails extends StatelessWidget {
             Navigator.of(context).pop(false);
           }
         ),
+        _createActionButton(
+         context,
+         "Delete Post",
+         "Are you sure you wish to delete this post?",
+          () async {
+            await _deletePost(element);
+            // Dismiss the AlertDialog and the ReportDetails widget as well.
+            Navigator.of(context).pop(true);
+            Navigator.of(context).pop(true);
+           },
+          () {
+            Navigator.of(context).pop(false);
+          }
+        ),
+       _createActionButton(
+         context,
+         "Delete User",
+         "Are you sure you wish to delete this user?",
+          () async {
+            await Firestore.instance.collection("users").document(element.data["postCreatedBy"]).delete();
+            // Dismiss the AlertDialog and the ReportDetails widget as well.
+            Navigator.of(context).pop(true);
+            Navigator.of(context).pop(true);
+           },
+          () {
+            Navigator.of(context).pop(false);
+          }
+        ),
       ],
     );
   }
