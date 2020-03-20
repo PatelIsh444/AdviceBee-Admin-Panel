@@ -46,6 +46,21 @@ class Overview extends StatelessWidget {
               return OverviewDetail(title: title, detail: 'Loading...');
             }
           },
+        ),
+        StreamBuilder(
+          stream: Firestore.instance.collection("users").snapshots(), 
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            final String title = 'Users';
+            if (snapshot.hasData) {
+              return OverviewDetail(title: title, detail: snapshot.data.documents.length.toString());
+            }
+            else if (snapshot.hasError) {
+              return OverviewDetail(title: title, detail: 'Error getting number of users.');
+            }
+            else {
+              return OverviewDetail(title: title, detail: 'Loading...');
+            }
+          },
         )
       ],
     );
