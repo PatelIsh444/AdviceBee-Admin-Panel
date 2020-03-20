@@ -93,34 +93,6 @@ class ReportCell extends StatelessWidget {
               );
             }
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.all(8),
-          child: RaisedButton(
-            child: Text("Delete"),
-            onPressed: () {
-              showDialog(
-                context: context,
-                child: AlertDialog(
-                  title: Text("Confirm"),
-                  content: Text("Are you sure you wish to delete this item?"),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text("DELETE"),
-                      onPressed: () async {
-                        await element.reference.delete();
-                        Navigator.of(context).pop(true);
-                      } 
-                    ),
-                    FlatButton(
-                      child: Text("CANCEL"),
-                      onPressed: () => Navigator.of(context).pop(false)
-                    ),
-                  ],
-                )
-              );
-            },
-          ),
         )
       ],
     );
