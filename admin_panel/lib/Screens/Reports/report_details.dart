@@ -180,7 +180,7 @@ class ReportDetails extends StatelessWidget {
                     onPressed: onConfirmPressed
                   ),
                   FlatButton(
-                    child: Text("CANCEL"),
+                    child: Text("Cancel"),
                     onPressed: onCancelPressed
                   ),
                 ],
