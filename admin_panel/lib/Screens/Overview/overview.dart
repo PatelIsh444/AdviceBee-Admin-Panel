@@ -63,6 +63,21 @@ class Overview extends StatelessWidget {
               return OverviewDetail(title: title, detail: 'Loading...');
             }
           },
+        ),
+        StreamBuilder(
+          stream: Firestore.instance.collection("groups").snapshots(), 
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            final String title = 'Groups';
+            if (snapshot.hasData) {
+              return OverviewDetail(title: title, detail: snapshot.data.documents.length.toString());
+            }
+            else if (snapshot.hasError) {
+              return OverviewDetail(title: title, detail: 'Error getting number of groups.');
+            }
+            else {
+              return OverviewDetail(title: title, detail: 'Loading...');
+            }
+          },
         )
       ],
     );
