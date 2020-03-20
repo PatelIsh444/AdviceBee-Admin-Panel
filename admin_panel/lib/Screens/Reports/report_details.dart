@@ -119,7 +119,7 @@ class ReportDetails extends StatelessWidget {
       children: <Widget>[
        _createActionButton(
          context,
-         "IGNORE",
+         "Ignore Report",
          "Are you sure you wish to ignore this report?",
           () async {
             await element.reference.delete();
