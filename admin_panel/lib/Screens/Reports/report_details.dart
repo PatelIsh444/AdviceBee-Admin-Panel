@@ -117,37 +117,49 @@ class ReportDetails extends StatelessWidget {
   Widget _generateActionRow(BuildContext context, DocumentSnapshot element) {
     return Row(
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(8),
-          child: RaisedButton(
-            child: Text("Ignore Report"),
-            onPressed: () {
-              showDialog(
-                context: context,
-                child: AlertDialog(
-                  title: Text("Confirm"),
-                  content: Text("Are you sure you wish to ignore this report?"),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text("IGNORE"),
-                      onPressed: () async {
-                        await element.reference.delete();
-                        // Dismiss the AlertDialog and the ReportDetails widget as well.
-                        Navigator.of(context).pop(true);
-                        Navigator.of(context).pop(true);
-                      } 
-                    ),
-                    FlatButton(
-                      child: Text("CANCEL"),
-                      onPressed: () => Navigator.of(context).pop(false)
-                    ),
-                  ],
-                )
-              );
-            }
-          ),
+       _createActionButton(
+         context,
+         "IGNORE",
+         "Are you sure you wish to ignore this report?",
+          () async {
+            await element.reference.delete();
+            // Dismiss the AlertDialog and the ReportDetails widget as well.
+            Navigator.of(context).pop(true);
+            Navigator.of(context).pop(true);
+           },
+          () {
+            Navigator.of(context).pop(false);
+          }
         ),
       ],
     );
+  }
+
+  Padding _createActionButton(BuildContext context, String buttonText, String confirmationDescription, void Function() onConfirmPressed, void Function() onCancelPressed) {
+    return Padding(
+        padding: EdgeInsets.all(8),
+        child: RaisedButton(
+          child: Text(buttonText),
+          onPressed: () {
+            showDialog(
+              context: context,
+              child: AlertDialog(
+                title: Text("Confirm"),
+                content: Text(confirmationDescription),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(buttonText),
+                    onPressed: onConfirmPressed
+                  ),
+                  FlatButton(
+                    child: Text("CANCEL"),
+                    onPressed: onCancelPressed
+                  ),
+                ],
+              )
+            );
+          }
+        ),
+      );
   }
 }
