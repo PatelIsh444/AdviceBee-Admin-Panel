@@ -28,9 +28,11 @@ class Overview extends StatelessWidget {
     );
   }
 
-  Row _generateOverviewDetails() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _generateOverviewDetails() {
+    return Wrap(
+      spacing: 14,
+      runSpacing: 14,
+      alignment: WrapAlignment.start,
       children: <Widget>[
         StreamBuilder(
           stream: Firestore.instance.collection("reports").snapshots(), 
