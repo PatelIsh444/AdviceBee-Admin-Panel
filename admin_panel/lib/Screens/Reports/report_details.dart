@@ -115,6 +115,13 @@ class ReportDetails extends StatelessWidget {
   }
 
   Widget _generateActionRow(BuildContext context, DocumentSnapshot element) {
+    Future<void> deleteReportAndDismissPopup() async{
+        element.reference.delete();
+        // Dismiss the AlertDialog and the ReportDetails widget as well.
+        Navigator.of(context).pop(true);
+        Navigator.of(context).pop(true);
+    }
+
     return Row(
       children: <Widget>[
        _createActionButton(
@@ -122,11 +129,8 @@ class ReportDetails extends StatelessWidget {
          "Ignore Report",
          "Are you sure you wish to ignore this report?",
           () async {
-            await element.reference.delete();
-            // Dismiss the AlertDialog and the ReportDetails widget as well.
-            Navigator.of(context).pop(true);
-            Navigator.of(context).pop(true);
-           },
+            await deleteReportAndDismissPopup();
+          },
           () {
             Navigator.of(context).pop(false);
           }
@@ -137,10 +141,8 @@ class ReportDetails extends StatelessWidget {
          "Are you sure you wish to delete this post?",
           () async {
             await _deletePost(element);
-            // Dismiss the AlertDialog and the ReportDetails widget as well.
-            Navigator.of(context).pop(true);
-            Navigator.of(context).pop(true);
-           },
+            await deleteReportAndDismissPopup();
+          },
           () {
             Navigator.of(context).pop(false);
           }
@@ -151,10 +153,8 @@ class ReportDetails extends StatelessWidget {
          "Are you sure you wish to delete this user?",
           () async {
             await Firestore.instance.collection("users").document(element.data["postCreatedBy"]).delete();
-            // Dismiss the AlertDialog and the ReportDetails widget as well.
-            Navigator.of(context).pop(true);
-            Navigator.of(context).pop(true);
-           },
+            await deleteReportAndDismissPopup();
+          },
           () {
             Navigator.of(context).pop(false);
           }
