@@ -78,8 +78,62 @@ class Overview extends StatelessWidget {
               return OverviewDetail(title: title, detail: 'Loading...');
             }
           },
-        )
+        ),
+        FutureBuilder(
+          future: _calculateNumberOfPosts(),
+          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+            final String title = 'Total Posts';
+            if (snapshot.hasData) {
+              return OverviewDetail(title: title, detail: snapshot.data.toString());
+            }
+            else if (snapshot.hasError) {
+              return OverviewDetail(title: title, detail: 'Error getting number of groups.');
+            }
+            else {
+              return OverviewDetail(title: title, detail: 'Loading...');
+            }
+          },
+        ),
+        StreamBuilder(
+          stream: Firestore.instance.collectionGroup("topicQuestions").snapshots(), 
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            final String title = 'Topic Posts';
+            if (snapshot.hasData) {
+              return OverviewDetail(title: title, detail: snapshot.data.documents.length.toString());
+            }
+            else if (snapshot.hasError) {
+              return OverviewDetail(title: title, detail: 'Error getting number of groups.');
+            }
+            else {
+              return OverviewDetail(title: title, detail: 'Loading...');
+            }
+          },
+        ),
+        StreamBuilder(
+          stream: Firestore.instance.collectionGroup("groupQuestions").snapshots(), 
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            final String title = 'Group Posts';
+            if (snapshot.hasData) {
+              return OverviewDetail(title: title, detail: snapshot.data.documents.length.toString());
+            }
+            else if (snapshot.hasError) {
+              return OverviewDetail(title: title, detail: 'Error getting number of groups.');
+            }
+            else {
+              return OverviewDetail(title: title, detail: 'Loading...');
+            }
+          },
+        ),
       ],
     );
+  }
+
+  Future<int> _calculateNumberOfPosts() async {
+    int topicPosts;
+    int groupPosts; 
+    await Firestore.instance.collectionGroup("topicQuestions").getDocuments().then((value) => topicPosts = value.documents.length);
+    await Firestore.instance.collectionGroup("groupQuestions").getDocuments().then((value) => groupPosts = value.documents.length);
+
+    return topicPosts + groupPosts;
   }
 }
