@@ -30,8 +30,8 @@ class Overview extends StatelessWidget {
 
   Widget _generateOverviewDetails() {
     return Wrap(
-      spacing: 14,
-      runSpacing: 14,
+      spacing: 18,
+      runSpacing: 18,
       alignment: WrapAlignment.start,
       children: <Widget>[
         StreamBuilder(
