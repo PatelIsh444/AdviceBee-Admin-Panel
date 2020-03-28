@@ -44,6 +44,7 @@ class Configuration extends StatelessWidget {
     List<Widget> children = [];
     
     dailyQuestionsLimitMap.forEach((key, value) => children.add(OverviewDetail(title: key, detail: value.toString())));
+
     children.add(
       ClipRRect(
         borderRadius: BorderRadius.circular(14.0),
@@ -76,6 +77,7 @@ class Configuration extends StatelessWidget {
         ),
       )
     );
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
