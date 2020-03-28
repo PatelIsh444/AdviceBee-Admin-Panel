@@ -67,7 +67,7 @@ class Configuration extends StatelessWidget {
                   contentPadding: EdgeInsets.zero,
                   content: SizedBox(
                     width: 500,
-                    height: 350,
+                    height: 500,
                     child: ConfigurationDetails(initialDailyQuestionsLimitMap: dailyQuestionsLimitMap)
                   ),
                 )
