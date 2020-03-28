@@ -38,7 +38,7 @@ class _ConfigurationDetailsState extends State<ConfigurationDetails> {
     
     children.add(
       RaisedButton(
-        child: Text("confirm"), 
+        child: Text("Submit"), 
         onPressed: () async {
           await _updateConfigWithUpdatedDailyNumberOfPostsPerRank(dailyQuestionsLimitMap);
           Navigator.of(context).pop(true);
