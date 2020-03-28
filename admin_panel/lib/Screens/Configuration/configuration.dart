@@ -1,3 +1,4 @@
+import 'package:admin_panel/Screens/Configuration/configuration_details.dart';
 import 'package:admin_panel/Screens/Overview/overview_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class Configuration extends StatelessWidget {
       future: Firestore.instance.collection("configuration").document("config").get(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return _generateDailyPostLimitRow(snapshot);
+          return _generateDailyPostLimitRow(context, snapshot);
         }
         else {
           return Text("Loading...");
@@ -37,7 +38,7 @@ class Configuration extends StatelessWidget {
     );
   }
 
-  Widget _generateDailyPostLimitRow(AsyncSnapshot<dynamic> snapshot) {
+  Widget _generateDailyPostLimitRow(BuildContext context, AsyncSnapshot<dynamic> snapshot) {
     Map<String, dynamic> dailyQuestionsLimitMap = snapshot.data["dailyQuestionsLimit"];
 
     List<Widget> children = [];
@@ -58,7 +59,19 @@ class Configuration extends StatelessWidget {
                 fontSize: 30
               ),
             ),
-            onPressed: () => {},
+            onPressed: () {
+              showDialog(
+                context: context,
+                child: AlertDialog(
+                  contentPadding: EdgeInsets.zero,
+                  content: SizedBox(
+                    width: 500,
+                    height: 350,
+                    child: ConfigurationDetails()
+                  ),
+                )
+              );
+            },
           ),
         ),
       )
