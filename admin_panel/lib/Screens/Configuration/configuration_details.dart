@@ -75,7 +75,7 @@ class _ConfigurationDetailsState extends State<ConfigurationDetails> {
           ),
           initialValue: value.toString(),
           onChanged: (value) async {
-            setState(() => dailyQuestionsLimitMap[key] = value);
+            setState(() => dailyQuestionsLimitMap[key] = int.parse(value));
           },
         ),
       ],
