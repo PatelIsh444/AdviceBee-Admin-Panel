@@ -132,6 +132,7 @@ class ReportDetails extends StatelessWidget {
          "Ignore Report",
          "Are you sure you wish to ignore this report?",
           () async {
+            await _removeReporterUserIdFromReportedPostData(element);
             await deleteReportAndDismissPopup();
           },
           () {
@@ -203,6 +204,24 @@ class ReportDetails extends StatelessWidget {
     else {
       _deletePostInGroupsCollection(reportedPost);
     }
+  }
+
+  Future<void> _removeReporterUserIdFromReportedPostData(DocumentSnapshot reportedPost) async {
+    String collection = reportedPost.data["postLocation"] == "topics" ? "topics" : "groups";
+    String subCollection = reportedPost.data["postLocation"] == "topics" ? "topicQuestions" : "groupQuestions";
+    List<String> usersWhoReported = [];
+
+    await reportedPost.reference.collection("ReportedUsers").getDocuments().then((value) => usersWhoReported = value.documents.map((e) => e.documentID).toList());
+
+    Map<String, bool> reportsMap = Map.fromIterable(usersWhoReported, key: (userUid) => userUid, value: (item) => false);
+
+    Firestore.instance
+      .collection(collection)
+      .document(reportedPost.data["postLocationId"])
+      .collection(subCollection)
+      .document(reportedPost.documentID).updateData({
+        "reports" : reportsMap
+      });
   }
 
   void _deletePostInTopicsCollection(DocumentSnapshot reportedPost) async {
