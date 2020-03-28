@@ -26,7 +26,7 @@ class Configuration extends StatelessWidget {
 
   Widget _generateConfigurationDetails() {
     return StreamBuilder(
-      stream: Firestore.instance.collection("configuration").document("config").get().asStream(),
+      stream: Firestore.instance.collection("configuration").document("config").snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return _generateDailyPostLimitRow(context, snapshot);
