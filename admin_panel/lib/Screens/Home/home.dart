@@ -1,3 +1,4 @@
+import 'package:admin_panel/Screens/Configuration/configuration.dart';
 import 'package:admin_panel/Screens/Overview/overview.dart';
 import 'package:admin_panel/Screens/Reports/reports.dart';
 import 'package:admin_panel/Services/authentication_service.dart';
@@ -71,6 +72,15 @@ class _HomeState extends State<Home> {
               child: Reports(),
             )
           ),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.all(25),
+              child: Configuration(),
+            )
+          ),
         ],
       ),
       tabs: [
@@ -80,7 +90,11 @@ class _HomeState extends State<Home> {
         ),
         BottomNavigationBarItem(
           title: Text("Reports"),
-          icon: Icon(Icons.report),
+          icon: Icon(Icons.report), 
+        ),
+        BottomNavigationBarItem(
+          title: Text("Configuration"),
+          icon: Icon(Icons.settings),
         )
       ],
       currentIndex: _currentIndex,
