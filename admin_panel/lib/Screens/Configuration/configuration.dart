@@ -55,7 +55,7 @@ class Configuration extends StatelessWidget {
               "Edit",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                fontSize: 34
+                fontSize: 30
               ),
             ),
             onPressed: () => {},
