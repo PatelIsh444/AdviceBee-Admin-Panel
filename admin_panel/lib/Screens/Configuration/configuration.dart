@@ -68,7 +68,7 @@ class Configuration extends StatelessWidget {
                   content: SizedBox(
                     width: 500,
                     height: 350,
-                    child: ConfigurationDetails()
+                    child: ConfigurationDetails(initialDailyQuestionsLimitMap: dailyQuestionsLimitMap)
                   ),
                 )
               );
