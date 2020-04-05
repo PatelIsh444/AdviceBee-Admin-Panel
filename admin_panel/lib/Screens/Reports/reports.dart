@@ -8,7 +8,7 @@ class Reports extends StatefulWidget {
 }
 
 class _ReportsState extends State<Reports> {
-  Sort sort = Sort.numberOfReports;
+  Sort sort = Sort.lastReported;
 
   @override
   Widget build(BuildContext context) {
