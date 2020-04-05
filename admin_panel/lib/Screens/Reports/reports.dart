@@ -42,35 +42,7 @@ class _ReportsState extends State<Reports> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Row(
-          children: <Widget>[
-            Text(
-              "Report",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 38
-              ),
-            ),
-            SizedBox(width: 50,),
-            Text("Sort: "),
-            DropdownButton<Sort>(
-              value: sort,
-              items: <DropdownMenuItem<Sort>>[
-                DropdownMenuItem(
-                  child: Text("Recently Reported"),
-                  value: Sort.lastReported,
-                ),
-                DropdownMenuItem(
-                  child: Text("Most Reports"),
-                  value: Sort.numberOfReports,
-                )
-              ], 
-              onChanged: (value) {  
-                setState(() => this.sort = value);
-              },
-            )
-          ],
-        ),
+        _generateHeaderRow(),
         SizedBox(height: 18),
         Expanded(
           child: SingleChildScrollView(
@@ -84,6 +56,38 @@ class _ReportsState extends State<Reports> {
             ),
           ),
         ),
+      ],
+    );
+  }
+
+  Widget _generateHeaderRow() {
+    return Row(
+      children: <Widget>[
+        Text(
+          "Report",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 38
+          ),
+        ),
+        SizedBox(width: 50,),
+        Text("Sort: "),
+        DropdownButton<Sort>(
+          value: sort,
+          items: <DropdownMenuItem<Sort>>[
+            DropdownMenuItem(
+              child: Text("Recently Reported"),
+              value: Sort.lastReported,
+            ),
+            DropdownMenuItem(
+              child: Text("Most Reports"),
+              value: Sort.numberOfReports,
+            )
+          ], 
+          onChanged: (value) {  
+            setState(() => this.sort = value);
+          },
+        )
       ],
     );
   }
