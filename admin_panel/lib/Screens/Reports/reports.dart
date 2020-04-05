@@ -8,10 +8,12 @@ class Reports extends StatefulWidget {
 }
 
 class _ReportsState extends State<Reports> {
+  Sort sort = Sort.numberOfReports;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Firestore.instance.collection("reports").snapshots(),
+      stream: Firestore.instance.collection("reports").orderBy(sort.key, descending: sort.isDecending).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {  
         if (snapshot.hasData) {
           return _generateReportsView(snapshot);
