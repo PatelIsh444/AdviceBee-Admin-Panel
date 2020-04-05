@@ -66,6 +66,7 @@ class _ReportsState extends State<Reports> {
                 )
               ], 
               onChanged: (value) {  
+                setState(() => this.sort = value);
               },
             )
           ],
