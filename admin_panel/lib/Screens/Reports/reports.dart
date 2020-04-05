@@ -39,15 +39,51 @@ class _ReportsState extends State<Reports> {
   } 
 
   Widget _generateReportsView(AsyncSnapshot<QuerySnapshot> snapshot) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Wrap(
-        spacing: 14,
-        runSpacing: 14,
-        children: snapshot.data.documents.map((element) {
-          return ReportCell(element);
-        }).toList()
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Text(
+              "Report",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 38
+              ),
+            ),
+            SizedBox(width: 50,),
+            Text("Sort: "),
+            DropdownButton<Sort>(
+              value: sort,
+              items: <DropdownMenuItem<Sort>>[
+                DropdownMenuItem(
+                  child: Text("Recently Reported"),
+                  value: Sort.lastReported,
+                ),
+                DropdownMenuItem(
+                  child: Text("Most Reports"),
+                  value: Sort.numberOfReports,
+                )
+              ], 
+              onChanged: (value) {  
+              },
+            )
+          ],
+        ),
+        SizedBox(height: 18),
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Wrap(
+              spacing: 14,
+              runSpacing: 14,
+              children: snapshot.data.documents.map((element) {
+                return ReportCell(element);
+              }).toList()
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
