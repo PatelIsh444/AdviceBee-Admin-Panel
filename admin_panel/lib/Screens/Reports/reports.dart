@@ -49,3 +49,13 @@ class _ReportsState extends State<Reports> {
     );
   }
 }
+
+class Sort {
+  static Sort numberOfReports = Sort('numberOfReports', true);
+  static Sort lastReported = Sort('lastReported', true);
+  
+  String key;
+  bool isDecending;
+
+  Sort(this.key, this.isDecending);
+}
