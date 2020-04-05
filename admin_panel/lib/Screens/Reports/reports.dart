@@ -44,18 +44,7 @@ class _ReportsState extends State<Reports> {
       children: <Widget>[
         _generateHeaderRow(),
         SizedBox(height: 18),
-        Expanded(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Wrap(
-              spacing: 14,
-              runSpacing: 14,
-              children: snapshot.data.documents.map((element) {
-                return ReportCell(element);
-              }).toList()
-            ),
-          ),
-        ),
+        _generateScrollView(snapshot),
       ],
     );
   }
@@ -89,6 +78,21 @@ class _ReportsState extends State<Reports> {
           },
         )
       ],
+    );
+  }
+  
+  Widget _generateScrollView(AsyncSnapshot<QuerySnapshot> snapshot) {
+    return Expanded(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Wrap(
+          spacing: 14,
+          runSpacing: 14,
+          children: snapshot.data.documents.map((element) {
+            return ReportCell(element);
+          }).toList()
+        ),
+      ),
     );
   }
 }
