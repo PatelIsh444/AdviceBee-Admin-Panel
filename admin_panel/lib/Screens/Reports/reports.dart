@@ -8,10 +8,12 @@ class Reports extends StatefulWidget {
 }
 
 class _ReportsState extends State<Reports> {
+  Sort sort = Sort.lastReported;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Firestore.instance.collection("reports").snapshots(),
+      stream: Firestore.instance.collection("reports").orderBy(sort.key, descending: sort.isDecending).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {  
         if (snapshot.hasData) {
           return _generateReportsView(snapshot);
@@ -37,15 +39,70 @@ class _ReportsState extends State<Reports> {
   } 
 
   Widget _generateReportsView(AsyncSnapshot<QuerySnapshot> snapshot) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Wrap(
-        spacing: 14,
-        runSpacing: 14,
-        children: snapshot.data.documents.map((element) {
-          return ReportCell(element);
-        }).toList()
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        _generateHeaderRow(),
+        SizedBox(height: 18),
+        _generateScrollView(snapshot),
+      ],
+    );
+  }
+
+  Widget _generateHeaderRow() {
+    return Row(
+      children: <Widget>[
+        Text(
+          "Report",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 38
+          ),
+        ),
+        SizedBox(width: 50,),
+        Text("Sort: "),
+        DropdownButton<Sort>(
+          value: sort,
+          items: <DropdownMenuItem<Sort>>[
+            DropdownMenuItem(
+              child: Text("Recently Reported"),
+              value: Sort.lastReported,
+            ),
+            DropdownMenuItem(
+              child: Text("Most Reports"),
+              value: Sort.numberOfReports,
+            )
+          ], 
+          onChanged: (value) {  
+            setState(() => this.sort = value);
+          },
+        )
+      ],
+    );
+  }
+  
+  Widget _generateScrollView(AsyncSnapshot<QuerySnapshot> snapshot) {
+    return Expanded(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Wrap(
+          spacing: 14,
+          runSpacing: 14,
+          children: snapshot.data.documents.map((element) {
+            return ReportCell(element);
+          }).toList()
+        ),
       ),
     );
   }
+}
+
+class Sort {
+  static Sort numberOfReports = Sort('numberOfReports', true);
+  static Sort lastReported = Sort('lastReported', true);
+  
+  String key;
+  bool isDecending;
+
+  Sort(this.key, this.isDecending);
 }
