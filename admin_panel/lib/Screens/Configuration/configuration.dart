@@ -60,7 +60,7 @@ class Configuration extends StatelessWidget {
         if (snapshot.hasData) {
           return _generateConfigRow(
             context,
-            "Awarded Number Of Questions After Purchase",
+            "Awarded number of questions after purchase",
             "awardedNumberOfQuestionsAfterPurchase",
             snapshot.data["awardedNumberOfQuestionsAfterPurchase"]
           );
