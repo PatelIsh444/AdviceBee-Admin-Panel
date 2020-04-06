@@ -39,7 +39,7 @@ class Configuration extends StatelessWidget {
       stream: Firestore.instance.collection("configuration").document("config").snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return _generateDailyPostLimitRow(context, snapshot);
+          return _generateConfigRow(context, snapshot.data["dailyQuestionsLimit"], "dailyQuestionsLimit");
         }
         else {
           return Text("Loading...");
@@ -50,10 +50,10 @@ class Configuration extends StatelessWidget {
 
   Widget _generatePayConfigurationDetails() {
     return StreamBuilder(
-      stream: Firestore.instance.collection("configuration").document("payConfig").snapshots(),
+      stream: Firestore.instance.collection("configuration").document("config").snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return _generateDailyPostLimitRow(context, snapshot);
+          return _generateConfigRow(context, snapshot.data["awardedNumberOfQuestionsAfterPurchase"], "awardedNumberOfQuestionsAfterPurchase");
         }
         else {
           return Text("Loading...");
@@ -62,12 +62,10 @@ class Configuration extends StatelessWidget {
     );
   }
 
-  Widget _generateDailyPostLimitRow(BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-    Map<String, dynamic> dailyQuestionsLimitMap = snapshot.data["dailyQuestionsLimit"];
-
+  Widget _generateConfigRow(BuildContext context, Map<String, dynamic> map, String mapPropertyNameInDocument) {
     List<Widget> children = [];
     
-    dailyQuestionsLimitMap.forEach((key, value) => children.add(OverviewDetail(title: key, detail: value.toString())));
+    map.forEach((key, value) => children.add(OverviewDetail(title: key, detail: value.toString())));
 
     children.add(
       ClipRRect(
@@ -92,7 +90,7 @@ class Configuration extends StatelessWidget {
                   content: SizedBox(
                     width: 500,
                     height: 500,
-                    child: ConfigurationDetails(initialDailyQuestionsLimitMap: dailyQuestionsLimitMap)
+                    child: ConfigurationDetails(initialMap: map, mapPropertyNameInDocument: mapPropertyNameInDocument)
                   ),
                 )
               );
