@@ -19,6 +19,7 @@ class Configuration extends StatelessWidget {
           ),
           SizedBox(height: 25),
           _generateConfigurationDetails(),
+          _generatePayConfigurationDetails(),
         ],
       )
     );
@@ -27,6 +28,20 @@ class Configuration extends StatelessWidget {
   Widget _generateConfigurationDetails() {
     return StreamBuilder(
       stream: Firestore.instance.collection("configuration").document("config").snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return _generateDailyPostLimitRow(context, snapshot);
+        }
+        else {
+          return Text("Loading...");
+        }
+      },
+    );
+  }
+
+  Widget _generatePayConfigurationDetails() {
+    return StreamBuilder(
+      stream: Firestore.instance.collection("configuration").document("payConfig").snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return _generateDailyPostLimitRow(context, snapshot);
