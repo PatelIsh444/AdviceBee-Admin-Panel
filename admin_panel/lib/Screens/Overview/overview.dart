@@ -23,6 +23,24 @@ class Overview extends StatelessWidget {
           ),
           SizedBox(height: 12),
           _generateOverviewDetails(),
+          Row(
+            children: <Widget>[
+              StreamBuilder(
+                stream: Firestore.instance.collection('users').snapshots(),
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    return Text(snapshot.data.documents.length.toString());
+                  }
+                  else if (snapshot.hasError) {
+                    return Text('Error getting number of reports.');
+                  }
+                  else {
+                    return Text('Loading...');
+                  }
+                },
+              )
+            ],
+          )
         ],
       )
     );
