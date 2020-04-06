@@ -21,11 +21,11 @@ class Configuration extends StatelessWidget {
           _generateConfigurationDetails(),
           SizedBox(height: 30),
           Text(
-              "Payment Configuration",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 35,
-              )
+            "Payment Configuration",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 35,
+            )
           ),
           SizedBox(height: 10),
           _generatePayConfigurationDetails(),
