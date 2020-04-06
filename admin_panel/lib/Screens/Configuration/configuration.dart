@@ -39,7 +39,7 @@ class Configuration extends StatelessWidget {
       stream: Firestore.instance.collection("configuration").document("config").snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return _generateConfigRow(context, snapshot.data["dailyQuestionsLimit"], "dailyQuestionsLimit");
+          return _generateConfigRow(context, "dailyQuestionsLimit", snapshot.data["dailyQuestionsLimit"]);
         }
         else {
           return Text("Loading...");
@@ -53,7 +53,7 @@ class Configuration extends StatelessWidget {
       stream: Firestore.instance.collection("configuration").document("config").snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return _generateConfigRow(context, snapshot.data["awardedNumberOfQuestionsAfterPurchase"], "awardedNumberOfQuestionsAfterPurchase");
+          return _generateConfigRow(context, "awardedNumberOfQuestionsAfterPurchase", snapshot.data["awardedNumberOfQuestionsAfterPurchase"]);
         }
         else {
           return Text("Loading...");
@@ -62,7 +62,7 @@ class Configuration extends StatelessWidget {
     );
   }
 
-  Widget _generateConfigRow(BuildContext context, Map<String, dynamic> map, String mapPropertyNameInDocument) {
+  Widget _generateConfigRow(BuildContext context, String mapPropertyNameInDocument, Map<String, dynamic> map) {
     List<Widget> children = [];
     
     map.forEach((key, value) => children.add(OverviewDetail(title: key, detail: value.toString())));
