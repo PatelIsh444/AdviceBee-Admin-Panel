@@ -2,21 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ConfigurationDetails extends StatefulWidget {
-  final Map<String, dynamic> initialDailyQuestionsLimitMap;
+  final Map<String, dynamic> initialMap;
+  final String mapPropertyNameInDocument;
 
-  ConfigurationDetails({this.initialDailyQuestionsLimitMap});
+  ConfigurationDetails({this.initialMap, this.mapPropertyNameInDocument});
 
   @override
   _ConfigurationDetailsState createState() => _ConfigurationDetailsState();
 }
 
 class _ConfigurationDetailsState extends State<ConfigurationDetails> {
-  Map<String, dynamic> dailyQuestionsLimitMap;
+  Map<String, dynamic> map;
 
   @override
   void initState() {
     super.initState();
-    this.dailyQuestionsLimitMap = widget.initialDailyQuestionsLimitMap;
+    this.map = widget.initialMap;
   }
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class _ConfigurationDetailsState extends State<ConfigurationDetails> {
       SizedBox(height: 32,)
     ];
 
-    dailyQuestionsLimitMap.forEach((key, value) {
+    map.forEach((key, value) {
       children.add(_generateTextFormField(key, value));
       children.add(SizedBox(height: 32,));
     });
@@ -40,7 +41,7 @@ class _ConfigurationDetailsState extends State<ConfigurationDetails> {
       RaisedButton(
         child: Text("Submit"), 
         onPressed: () async {
-          await _updateConfigWithUpdatedDailyNumberOfPostsPerRank(dailyQuestionsLimitMap);
+          await _updateConfigWithUpdatedDailyNumberOfPostsPerRank(map);
           Navigator.of(context).pop(true);
         } 
       )
@@ -75,16 +76,16 @@ class _ConfigurationDetailsState extends State<ConfigurationDetails> {
           ),
           initialValue: value.toString(),
           onChanged: (value) async {
-            setState(() => dailyQuestionsLimitMap[key] = int.parse(value));
+            setState(() => map[key] = int.parse(value));
           },
         ),
       ],
     );
   }
 
-  Future<void> _updateConfigWithUpdatedDailyNumberOfPostsPerRank(Map<String, dynamic> dailyQuestionsLimitMap) async {
+  Future<void> _updateConfigWithUpdatedDailyNumberOfPostsPerRank(Map<String, dynamic> map) async {
     Firestore.instance.collection("configuration").document("config").updateData({
-      "dailyQuestionsLimit": dailyQuestionsLimitMap
+      widget.mapPropertyNameInDocument: map
     });
   }
 }

@@ -11,14 +11,24 @@ class Configuration extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Configuration",
+            "Daily Configuration",
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 35,
             )
           ),
-          SizedBox(height: 25),
+          SizedBox(height: 10),
           _generateConfigurationDetails(),
+          SizedBox(height: 30),
+          Text(
+            "Payment Configuration",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 35,
+            )
+          ),
+          SizedBox(height: 10),
+          _generatePayConfigurationDetails(),
         ],
       )
     );
@@ -29,7 +39,12 @@ class Configuration extends StatelessWidget {
       stream: Firestore.instance.collection("configuration").document("config").snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return _generateDailyPostLimitRow(context, snapshot);
+          return _generateConfigRow(
+            context,
+            "Number of daily posts per rank:",
+            "dailyQuestionsLimit",
+             snapshot.data["dailyQuestionsLimit"]
+          );
         }
         else {
           return Text("Loading...");
@@ -38,12 +53,29 @@ class Configuration extends StatelessWidget {
     );
   }
 
-  Widget _generateDailyPostLimitRow(BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-    Map<String, dynamic> dailyQuestionsLimitMap = snapshot.data["dailyQuestionsLimit"];
+  Widget _generatePayConfigurationDetails() {
+    return StreamBuilder(
+      stream: Firestore.instance.collection("configuration").document("config").snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return _generateConfigRow(
+            context,
+            "Awarded number of questions after purchase",
+            "awardedNumberOfQuestionsAfterPurchase",
+            snapshot.data["awardedNumberOfQuestionsAfterPurchase"]
+          );
+        }
+        else {
+          return Text("Loading...");
+        }
+      },
+    );
+  }
 
+  Widget _generateConfigRow(BuildContext context, String description, String mapPropertyNameInDocument, Map<String, dynamic> map) {
     List<Widget> children = [];
     
-    dailyQuestionsLimitMap.forEach((key, value) => children.add(OverviewDetail(title: key, detail: value.toString())));
+    map.forEach((key, value) => children.add(OverviewDetail(title: key, detail: value.toString())));
 
     children.add(
       ClipRRect(
@@ -68,7 +100,7 @@ class Configuration extends StatelessWidget {
                   content: SizedBox(
                     width: 500,
                     height: 500,
-                    child: ConfigurationDetails(initialDailyQuestionsLimitMap: dailyQuestionsLimitMap)
+                    child: ConfigurationDetails(initialMap: map, mapPropertyNameInDocument: mapPropertyNameInDocument)
                   ),
                 )
               );
@@ -82,7 +114,7 @@ class Configuration extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "Number of daily posts per rank:",
+          description,
           style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 20,
