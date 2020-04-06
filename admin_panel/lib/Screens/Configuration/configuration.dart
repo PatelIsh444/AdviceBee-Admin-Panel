@@ -17,9 +17,9 @@ class Configuration extends StatelessWidget {
               fontSize: 35,
             )
           ),
-          SizedBox(height: 25),
+          SizedBox(height: 10),
           _generateConfigurationDetails(),
-          SizedBox(height: 25),
+          SizedBox(height: 30),
           Text(
               "Payment Configuration",
               style: TextStyle(
@@ -27,7 +27,7 @@ class Configuration extends StatelessWidget {
                 fontSize: 35,
               )
           ),
-          SizedBox(height: 25),
+          SizedBox(height: 10),
           _generatePayConfigurationDetails(),
         ],
       )
