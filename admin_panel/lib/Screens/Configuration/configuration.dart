@@ -11,7 +11,7 @@ class Configuration extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Configuration",
+            "Daily Configuration",
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 35,
@@ -19,6 +19,14 @@ class Configuration extends StatelessWidget {
           ),
           SizedBox(height: 25),
           _generateConfigurationDetails(),
+          Text(
+              "Payment Configuration",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 35,
+              )
+          ),
+          SizedBox(height: 25),
           _generatePayConfigurationDetails(),
         ],
       )
