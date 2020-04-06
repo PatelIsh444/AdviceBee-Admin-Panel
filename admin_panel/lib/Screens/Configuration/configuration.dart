@@ -39,7 +39,12 @@ class Configuration extends StatelessWidget {
       stream: Firestore.instance.collection("configuration").document("config").snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return _generateConfigRow(context, "dailyQuestionsLimit", snapshot.data["dailyQuestionsLimit"]);
+          return _generateConfigRow(
+            context,
+            "Number of daily posts per rank:",
+            "dailyQuestionsLimit",
+             snapshot.data["dailyQuestionsLimit"]
+          );
         }
         else {
           return Text("Loading...");
@@ -53,7 +58,12 @@ class Configuration extends StatelessWidget {
       stream: Firestore.instance.collection("configuration").document("config").snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return _generateConfigRow(context, "awardedNumberOfQuestionsAfterPurchase", snapshot.data["awardedNumberOfQuestionsAfterPurchase"]);
+          return _generateConfigRow(
+            context,
+            "Awarded Number Of Questions After Purchase",
+            "awardedNumberOfQuestionsAfterPurchase",
+            snapshot.data["awardedNumberOfQuestionsAfterPurchase"]
+          );
         }
         else {
           return Text("Loading...");
@@ -62,7 +72,7 @@ class Configuration extends StatelessWidget {
     );
   }
 
-  Widget _generateConfigRow(BuildContext context, String mapPropertyNameInDocument, Map<String, dynamic> map) {
+  Widget _generateConfigRow(BuildContext context, String description, String mapPropertyNameInDocument, Map<String, dynamic> map) {
     List<Widget> children = [];
     
     map.forEach((key, value) => children.add(OverviewDetail(title: key, detail: value.toString())));
@@ -104,7 +114,7 @@ class Configuration extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          "Number of daily posts per rank:",
+          description,
           style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 20,
