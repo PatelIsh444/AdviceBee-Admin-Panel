@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'overview_detail.dart';
+import 'overview_user_chart.dart';
 
 class Overview extends StatelessWidget {
   @override
@@ -23,23 +24,22 @@ class Overview extends StatelessWidget {
           ),
           SizedBox(height: 12),
           _generateOverviewDetails(),
-          Row(
-            children: <Widget>[
-              StreamBuilder(
-                stream: Firestore.instance.collection('users').snapshots(),
-                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasData) {
-                    return Text(snapshot.data.documents.length.toString());
-                  }
-                  else if (snapshot.hasError) {
-                    return Text('Error getting number of reports.');
-                  }
-                  else {
-                    return Text('Loading...');
-                  }
-                },
-              )
-            ],
+          SizedBox(height: 14),
+          StreamBuilder(
+            stream: Firestore.instance.collection('users').snapshots(),
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasData) {
+                return OverViewUserChart(
+                  userData: {"Larvae": 30, "Queen Bee": 4, "Worker Bee": 10}
+                );
+              }
+              else if (snapshot.hasError) {
+                return Text('Error getting number of reports.');
+              }
+              else {
+                return Text('Loading...');
+              }
+            }
           )
         ],
       )
