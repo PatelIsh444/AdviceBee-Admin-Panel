@@ -1,3 +1,4 @@
+import 'package:admin_panel/Screens/Overview/overview_user_groups_chart.dart';
 import 'package:admin_panel/Screens/Overview/overview_user_posts_chart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +33,11 @@ class Overview extends StatelessWidget {
               if (snapshot.hasData) {
                 return Row(
                   children: [
-                    OverViewUserChart( userData: {"Larvae": 30, "Queen Bee": 4, "Worker Bee": 10}),
+                    OverViewUserChart(userData: {"Larvae": 30, "Queen Bee": 4, "Worker Bee": 10}),
                     SizedBox(width: 18),
-                    OverViewUserPostChart(usersPostedData: {"Users who have posted": 7, "Users who haven't posted": 14})
+                    OverViewUserPostChart(usersPostedData: {"Users who have posted": 7, "Users who haven't posted": 14}),
+                    SizedBox(width: 18),
+                    OverViewUserGroupChart(usersGroupData: {"Users who are in a group": 40, "Users who aren't in a group": 5})
                   ]
                 );
               }
