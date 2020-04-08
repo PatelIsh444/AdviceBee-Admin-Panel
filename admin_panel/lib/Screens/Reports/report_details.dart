@@ -132,8 +132,9 @@ class ReportDetails extends StatelessWidget {
          "Ignore Report",
          "Are you sure you wish to ignore this report?",
           () async {
-            await _removeReporterUserIdFromReportedPostData(element);
-            await deleteReportAndDismissPopup();
+            await _ignorePost(element);
+            Navigator.of(context).pop(true);
+            Navigator.of(context).pop(true);
           },
           () {
             Navigator.of(context).pop(false);
@@ -204,6 +205,12 @@ class ReportDetails extends StatelessWidget {
     else {
       _deletePostInGroupsCollection(reportedPost);
     }
+  }
+
+  Future<void> _ignorePost(DocumentSnapshot reportedPost) async {
+    reportedPost.reference.updateData({
+      "previouslyReviewed": true
+    });
   }
 
   Future<void> _removeReporterUserIdFromReportedPostData(DocumentSnapshot reportedPost) async {

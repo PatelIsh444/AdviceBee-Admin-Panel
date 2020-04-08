@@ -22,6 +22,20 @@ class ReportCell extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Row(
+              children: <Widget>[
+                Spacer(),
+                Text(
+                  (element["previouslyReviewed"] != true ? "New" : "Previously Reviewed"),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                   color: element["previouslyReviewed"] != true ? Colors.green : Colors.black
+                 ),
+                )
+              ]
+            ),
+            SizedBox(height: 4),
             _generateReportedPostHeader(element),
             SizedBox(height: 8),
             _generateUserDisplayName(element),
