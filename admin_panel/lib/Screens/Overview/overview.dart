@@ -1,7 +1,10 @@
+import 'package:admin_panel/Screens/Overview/overview_user_groups_chart.dart';
+import 'package:admin_panel/Screens/Overview/overview_user_posts_chart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'overview_detail.dart';
+import 'overview_user_chart.dart';
 
 class Overview extends StatelessWidget {
   @override
@@ -23,6 +26,29 @@ class Overview extends StatelessWidget {
           ),
           SizedBox(height: 12),
           _generateOverviewDetails(),
+          SizedBox(height: 14),
+          StreamBuilder(
+            stream: Firestore.instance.collection('users').snapshots(),
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasData) {
+                return Row(
+                  children: [
+                    OverViewUserChart(userData: _getRankData(snapshot)),
+                    SizedBox(width: 18),
+                    OverViewUserPostChart(usersPostedData: _getHasPostedData(snapshot)),
+                    SizedBox(width: 18),
+                    OverViewUserGroupChart(usersGroupData: _getUserGroupData(snapshot))
+                  ]
+                );
+              }
+              else if (snapshot.hasError) {
+                return Text('Error getting number of reports.');
+              }
+              else {
+                return Text('Loading...');
+              }
+            }
+          )
         ],
       )
     );
@@ -136,4 +162,43 @@ class Overview extends StatelessWidget {
 
     return topicPosts + groupPosts;
   }
+
+  Map<String, int> _getRankData(AsyncSnapshot<QuerySnapshot> snapshot) {
+    Map<String, int> data = {};
+
+    snapshot.data.documents.forEach((element) {
+      String rank = element.data["rank"];
+      data.putIfAbsent(rank, () => 0);
+      data[rank] = data[rank] + 1;
+    });
+
+    return data;
+  }
+
+  Map<String, int> _getHasPostedData(AsyncSnapshot<QuerySnapshot> snapshot) {
+    Map<String, int> data = {};
+    
+    snapshot.data.documents.forEach((element) {
+      List<dynamic> posts = element.data["myPosts"];
+      String key = posts.isEmpty ? "Users who haven't posted" : "Users who have posted";
+      data.putIfAbsent(key, () => 0);
+      data[key] = data[key] + 1;
+    });
+
+    return data;
+  }
+
+  Map<String, int> _getUserGroupData(AsyncSnapshot<QuerySnapshot> snapshot) {
+    Map<String, int> data = {};
+    
+    snapshot.data.documents.forEach((element) {
+      List<dynamic> groups = element.data["joinedGroups"];
+      String key = groups.isEmpty ? "Users who aren't in a group" : "Users who are in a group";
+      data.putIfAbsent(key, () => 0);
+      data[key] = data[key] + 1;
+    });
+
+    return data;
+  }
+
 }
