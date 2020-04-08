@@ -125,8 +125,21 @@ class ReportDetails extends StatelessWidget {
         Navigator.of(context).pop(true);
     }
 
-    return Row(
+    return Wrap(
       children: <Widget>[
+       _createActionButton(
+         context,
+         "Hide Post",
+         "Are you sure you wish to hide this post?",
+          () async {
+            await _hidePost(element);
+            Navigator.of(context).pop(true);
+            Navigator.of(context).pop(true);
+          },
+          () {
+            Navigator.of(context).pop(false);
+          }
+        ),
        _createActionButton(
          context,
          "Ignore Report",
@@ -194,6 +207,24 @@ class ReportDetails extends StatelessWidget {
           }
         ),
       );
+  }
+
+  Future<void> _hidePost(DocumentSnapshot reportedPost) async {
+    reportedPost.reference.updateData({
+      'postInReview': true
+    });
+
+    String postLocation = reportedPost.data["postLocation"];
+    String collection = postLocation == "topics" ? "topics" : "groups";
+    String subCollection = postLocation == "topics" ? "topicQuestions" : "groupQuestions";
+
+    Firestore.instance
+      .collection(collection)
+      .document(reportedPost.data["postLocationId"])
+      .collection(subCollection)
+      .document(reportedPost.documentID).updateData({
+        'postInReview': true
+      });
   }
 
   Future<void> _deletePost(DocumentSnapshot reportedPost) async {
