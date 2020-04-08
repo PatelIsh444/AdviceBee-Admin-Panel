@@ -97,7 +97,7 @@ class ReportCell extends StatelessWidget {
             return Text(
               reasons,
               style: TextStyle(
-                  fontWeight: FontWeight.w200,
+                  fontWeight: FontWeight.w600,
                   fontSize: 14,
                   color: colorReason
               ),
