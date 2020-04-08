@@ -125,7 +125,7 @@ class ReportDetails extends StatelessWidget {
         Navigator.of(context).pop(true);
     }
 
-    return Row(
+    return Wrap(
       children: <Widget>[
        _createActionButton(
          context,
