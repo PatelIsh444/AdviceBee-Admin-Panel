@@ -14,7 +14,7 @@ class OverViewUserGroupChart extends StatelessWidget {
 
   List<UserGroupData> data() {
     List<UserGroupData> data = [];
-    usersGroupData.forEach((key, value) => data.add(UserGroupData(key, value, key == "Users who are in a group" ? Colors.teal : Colors.deepOrange)));
+    usersGroupData.forEach((key, value) => data.add(UserGroupData(key, value, key == "Users who are in a group" ? Colors.teal : Colors.blueAccent)));
     return data; 
   }
 
