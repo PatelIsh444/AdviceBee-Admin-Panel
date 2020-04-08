@@ -140,7 +140,7 @@ class ReportCell extends StatelessWidget {
                 child: AlertDialog(
                   contentPadding: EdgeInsets.zero,
                   content: SizedBox(
-                    width: 500,
+                    width: 525,
                     height: 350,
                     child: ReportDetails(element)
                   ),
