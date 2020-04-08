@@ -1,3 +1,4 @@
+import 'package:admin_panel/Screens/Overview/overview_user_posts_chart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -29,8 +30,12 @@ class Overview extends StatelessWidget {
             stream: Firestore.instance.collection('users').snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
-                return OverViewUserChart(
-                  userData: {"Larvae": 30, "Queen Bee": 4, "Worker Bee": 10}
+                return Row(
+                  children: [
+                    OverViewUserChart( userData: {"Larvae": 30, "Queen Bee": 4, "Worker Bee": 10}),
+                    SizedBox(width: 18),
+                    OverViewUserPostChart(usersPostedData: {"Users who have posted": 7, "Users who haven't posted": 14})
+                  ]
                 );
               }
               else if (snapshot.hasError) {
