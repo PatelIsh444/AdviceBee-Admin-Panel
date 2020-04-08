@@ -26,6 +26,7 @@ class ReportCell extends StatelessWidget {
             SizedBox(height: 8),
             _generateUserDisplayName(element),
             _generateReportsCategoryReason(element),
+            _generatePostHiddenTextIfNeeded(element),
             _generateActionRow(context, element)
           ]
         )
@@ -108,6 +109,22 @@ class ReportCell extends StatelessWidget {
           }
         }
     );
+  }
+
+  Widget _generatePostHiddenTextIfNeeded(DocumentSnapshot element) {
+    if (element['postInReview'] != true) {
+      return Container();
+    }
+    else {
+      return Text(
+        "Post is in review",
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 16,
+          color: Colors.red
+        ),
+      );
+    }
   }
 
   Widget _generateActionRow(BuildContext context, DocumentSnapshot element) {
