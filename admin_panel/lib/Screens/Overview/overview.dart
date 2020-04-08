@@ -33,11 +33,11 @@ class Overview extends StatelessWidget {
               if (snapshot.hasData) {
                 return Row(
                   children: [
-                    OverViewUserChart(userData: {"Larvae": 30, "Queen Bee": 4, "Worker Bee": 10}),
+                    OverViewUserChart(userData: _getRankData(snapshot)),
                     SizedBox(width: 18),
-                    OverViewUserPostChart(usersPostedData: {"Users who have posted": 7, "Users who haven't posted": 14}),
+                    OverViewUserPostChart(usersPostedData: _getHasPostedData(snapshot)),
                     SizedBox(width: 18),
-                    OverViewUserGroupChart(usersGroupData: {"Users who are in a group": 40, "Users who aren't in a group": 5})
+                    OverViewUserGroupChart(usersGroupData: _getUserGroupData(snapshot))
                   ]
                 );
               }
@@ -162,4 +162,43 @@ class Overview extends StatelessWidget {
 
     return topicPosts + groupPosts;
   }
+
+  Map<String, int> _getRankData(AsyncSnapshot<QuerySnapshot> snapshot) {
+    Map<String, int> data = {};
+
+    snapshot.data.documents.forEach((element) {
+      String rank = element.data["rank"];
+      data.putIfAbsent(rank, () => 0);
+      data[rank] = data[rank] + 1;
+    });
+
+    return data;
+  }
+
+  Map<String, int> _getHasPostedData(AsyncSnapshot<QuerySnapshot> snapshot) {
+    Map<String, int> data = {};
+    
+    snapshot.data.documents.forEach((element) {
+      List<dynamic> posts = element.data["myPosts"];
+      String key = posts.isEmpty ? "Users who haven't posted" : "Users who have posted";
+      data.putIfAbsent(key, () => 0);
+      data[key] = data[key] + 1;
+    });
+
+    return data;
+  }
+
+  Map<String, int> _getUserGroupData(AsyncSnapshot<QuerySnapshot> snapshot) {
+    Map<String, int> data = {};
+    
+    snapshot.data.documents.forEach((element) {
+      List<dynamic> groups = element.data["joinedGroups"];
+      String key = groups.isEmpty ? "Users who aren't in a group" : "Users who are in a group";
+      data.putIfAbsent(key, () => 0);
+      data[key] = data[key] + 1;
+    });
+
+    return data;
+  }
+
 }
