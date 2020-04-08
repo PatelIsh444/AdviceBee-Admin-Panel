@@ -38,7 +38,7 @@ class OverViewUserChart extends StatelessWidget {
       child: Container(
         color: Colors.white,
         width: 318,
-        height: 318,
+        height: 330,
         child: Padding(
           padding: EdgeInsets.all(12),
           child: charts.PieChart(
