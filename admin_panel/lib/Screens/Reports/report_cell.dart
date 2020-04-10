@@ -16,7 +16,7 @@ class ReportCell extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
         ),
       width: 450,
-      height: 175,
+      height: 200,
       child: Padding(
         padding: EdgeInsets.all(12),
         child: Column(
