@@ -9,6 +9,7 @@ class Reports extends StatefulWidget {
 
 class _ReportsState extends State<Reports> {
   Sort sort = Sort.lastReported;
+  String searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +59,17 @@ class _ReportsState extends State<Reports> {
             fontWeight: FontWeight.w600,
             fontSize: 38
           ),
+        ),
+        SizedBox(width: 50,),
+        SizedBox(
+          width: 500,
+          child:  TextField(
+            decoration: InputDecoration(
+              hintText: "Search reported post title:"
+            ),
+            maxLines: 1,
+            onSubmitted: (value) => setState(() => this.searchQuery = value),
+          )
         ),
         SizedBox(width: 50,),
         Text("Sort: "),
