@@ -146,6 +146,7 @@ class ReportDetails extends StatelessWidget {
          "Are you sure you wish to ignore this report?",
           () async {
             await _ignorePost(element);
+            await _removeReporterUserIdFromReportedPostData(element);
             Navigator.of(context).pop(true);
             Navigator.of(context).pop(true);
           },
