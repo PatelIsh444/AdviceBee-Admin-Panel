@@ -19,7 +19,7 @@ class Configuration extends StatelessWidget {
           ),
           SizedBox(height: 10),
           _generateConfigurationDetails(),
-          SizedBox(height: 30),
+          SizedBox(height: 50),
           Text(
             "Payment Configuration",
             style: TextStyle(
@@ -29,6 +29,16 @@ class Configuration extends StatelessWidget {
           ),
           SizedBox(height: 10),
           _generatePayConfigurationDetails(),
+          SizedBox(height: 50),
+          Text(
+            "Rank Threshold Configuration",
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 35,
+            )
+          ),
+          SizedBox(height: 10),
+          _generateRankThresholdConfigurationDetails()
         ],
       )
     );
@@ -63,6 +73,25 @@ class Configuration extends StatelessWidget {
             "Awarded number of questions after purchase",
             "awardedNumberOfQuestionsAfterPurchase",
             snapshot.data["awardedNumberOfQuestionsAfterPurchase"]
+          );
+        }
+        else {
+          return Text("Loading...");
+        }
+      },
+    );
+  }
+
+    Widget _generateRankThresholdConfigurationDetails() {
+    return StreamBuilder(
+      stream: Firestore.instance.collection("configuration").document("config").snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return _generateConfigRow(
+            context,
+            "The number of points a user must achieve to reach that rank",
+            "rankThresholds",
+            snapshot.data["rankThresholds"]
           );
         }
         else {
