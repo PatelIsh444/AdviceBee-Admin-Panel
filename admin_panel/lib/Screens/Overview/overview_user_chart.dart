@@ -32,12 +32,13 @@ class OverViewUserChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int totalNumber = userData.values.reduce((value, element) => value += element);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(14.0),
       child: Container(
         color: Colors.white,
-        width: 318,
+        width: 338,
         height: 330,
         child: Padding(
           padding: EdgeInsets.all(12),
@@ -46,6 +47,13 @@ class OverViewUserChart extends StatelessWidget {
             animate: true,
             behaviors: [
               charts.DatumLegend(
+                position: charts.BehaviorPosition.top,
+                showMeasures: true,
+                legendDefaultMeasure: charts.LegendDefaultMeasure.firstValue,
+                measureFormatter: (num value) {
+                  final double percentage = ((value/totalNumber.toDouble()) * 100.0);
+                  return value == null ? '-' : percentage.toStringAsFixed(1) + '%';
+                },
                 desiredMaxColumns: 2,
                 desiredMaxRows: 3
               )

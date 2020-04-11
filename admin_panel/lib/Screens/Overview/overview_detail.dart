@@ -15,7 +15,7 @@ class OverviewDetail extends StatelessWidget {
       borderRadius: BorderRadius.circular(14.0),
       child: Container(
         color: Colors.white,
-        width: 150,
+        width: 160,
         height: 100,
         child: Padding(
           padding: EdgeInsets.all(12),
