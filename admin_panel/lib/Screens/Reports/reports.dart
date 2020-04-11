@@ -9,6 +9,7 @@ class Reports extends StatefulWidget {
 
 class _ReportsState extends State<Reports> {
   Sort sort = Sort.lastReported;
+  String searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,15 @@ class _ReportsState extends State<Reports> {
       stream: Firestore.instance.collection("reports").orderBy(sort.key, descending: sort.isDecending).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {  
         if (snapshot.hasData) {
-          return _generateReportsView(snapshot);
+
+          List<DocumentSnapshot> filteredDocuments = [];
+          snapshot.data.documents.forEach((element) {
+            if ((element["postTitle"] as String).toLowerCase().contains(searchQuery)) {
+              filteredDocuments.add(element);
+            }
+          });
+
+          return _generateReportsView(searchQuery.isNotEmpty ? filteredDocuments : snapshot.data.documents);
         }
         else {
           return _generateLoadingIndicator();
@@ -38,13 +47,13 @@ class _ReportsState extends State<Reports> {
     );
   } 
 
-  Widget _generateReportsView(AsyncSnapshot<QuerySnapshot> snapshot) {
+  Widget _generateReportsView(List<DocumentSnapshot> documents) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         _generateHeaderRow(),
         SizedBox(height: 18),
-        _generateScrollView(snapshot),
+        _generateScrollView(documents),
       ],
     );
   }
@@ -58,6 +67,17 @@ class _ReportsState extends State<Reports> {
             fontWeight: FontWeight.w600,
             fontSize: 38
           ),
+        ),
+        SizedBox(width: 50,),
+        SizedBox(
+          width: 500,
+          child:  TextField(
+            decoration: InputDecoration(
+              hintText: "Search reported post title:"
+            ),
+            maxLines: 1,
+            onSubmitted: (value) => setState(() => this.searchQuery = value),
+          )
         ),
         SizedBox(width: 50,),
         Text("Sort: "),
@@ -81,14 +101,14 @@ class _ReportsState extends State<Reports> {
     );
   }
   
-  Widget _generateScrollView(AsyncSnapshot<QuerySnapshot> snapshot) {
+  Widget _generateScrollView(List<DocumentSnapshot> documents) {
     return Expanded(
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Wrap(
           spacing: 14,
           runSpacing: 14,
-          children: snapshot.data.documents.map((element) {
+          children: documents.map((element) {
             return ReportCell(element);
           }).toList()
         ),
