@@ -1,5 +1,6 @@
 import 'package:admin_panel/Screens/Configuration/configuration.dart';
 import 'package:admin_panel/Screens/Overview/overview.dart';
+import 'package:admin_panel/Screens/Ratings/ratings.dart';
 import 'package:admin_panel/Screens/Reports/reports.dart';
 import 'package:admin_panel/Services/authentication_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -87,9 +88,7 @@ class _HomeState extends State<Home> {
             color: Colors.grey[200],
             child: Padding(
               padding: EdgeInsets.all(25),
-              child: Container(
-                color: Colors.black,
-              ),
+              child: Ratings()
             )
           ),
         ],
