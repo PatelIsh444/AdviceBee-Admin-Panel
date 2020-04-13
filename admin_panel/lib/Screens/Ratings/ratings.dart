@@ -21,7 +21,7 @@ class Ratings extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _buildOverViewRow(),
+        _buildOverViewRow(documents),
         SizedBox(height: 18),
         Expanded(
           child: _buildList(documents)
@@ -30,10 +30,55 @@ class Ratings extends StatelessWidget {
     );
   }
 
-  Widget _buildOverViewRow() {
-    return Row(
+  Widget _buildOverViewRow(List<DocumentSnapshot> documents) {
+    Map<String, int> map = {};
+    documents.forEach((element) {
+      String uid = element.data["userId"];
+      map.putIfAbsent(uid, () => 0);
+      map[uid] = map[uid] + 1;
+    });
+
+    int numberOfReviewers = map.keys.length;
+    int numberOfReviews = map.values.reduce((value, element) => value += element);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text("Ratings")
+        Text(
+          "Ratings",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 38
+          ),
+        ),
+        SizedBox(height: 8),
+        Row(
+          children: <Widget>[
+            Text(
+              'Reviews: $numberOfReviews',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 20
+              ),
+            ),
+            SizedBox(width: 15),
+            Text(
+              '|',
+             style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 20
+              ),
+            ),
+            SizedBox(width: 15),
+            Text(
+              'Reviewers: $numberOfReviewers',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 20
+              ),
+            )
+          ],
+        )
       ]
     );
   }
