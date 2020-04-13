@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Ratings extends StatelessWidget {
   @override
@@ -109,6 +110,16 @@ class Ratings extends StatelessWidget {
           ),
           DataColumn(
             label: Text(
+              "Date",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 20
+              ),
+            )
+          ),
+          DataColumn(
+            label: Text(
               "Feedback",
               style: TextStyle(
                 color: Colors.black,
@@ -140,6 +151,7 @@ class Ratings extends StatelessWidget {
               )
             )
           ),
+          DataCell(SingleChildScrollView(child: Text(DateFormat('MMMM d, yyyy h:m a').format(new DateTime.fromMillisecondsSinceEpoch((element.data["dateRated"] as Timestamp).toDate().toLocal().millisecondsSinceEpoch))))),
           DataCell(SingleChildScrollView(child: Text(element['message']))),
         ]
       ));
