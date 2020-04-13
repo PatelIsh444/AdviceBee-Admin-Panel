@@ -24,8 +24,17 @@ class Ratings extends StatelessWidget {
       children: <Widget>[
         _buildOverViewRow(documents),
         SizedBox(height: 18),
-        Expanded(
-          child: _buildList(documents)
+        ClipRRect(
+          borderRadius: BorderRadius.circular(24.0),
+          child: Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(4, 4, 4, 18),
+              child: Expanded(
+                child: _buildList(documents)
+              ),
+            )
+          ),
         )
       ],
     );
