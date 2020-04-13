@@ -129,7 +129,17 @@ class Ratings extends StatelessWidget {
       rows.add(DataRow(
         cells: [
           DataCell(SingleChildScrollView(child: Text(element['name']))),
-          DataCell(SingleChildScrollView(child: Text(element['type']))),
+          DataCell(
+            SingleChildScrollView(
+              child: Text(
+                capitalize((element['type'] as String)),
+                style: TextStyle(
+                  color: _getColorForType(element['type']),
+                  fontWeight: FontWeight.w600,
+                )
+              )
+            )
+          ),
           DataCell(SingleChildScrollView(child: Text(element['message']))),
         ]
       ));
@@ -137,4 +147,16 @@ class Ratings extends StatelessWidget {
 
     return rows;
   }
+  
+  Color _getColorForType(String type) {
+    switch (type) {
+      case "good": return Colors.green;
+      case "ok": return Colors.green;
+      case "ugh": return Colors.orange;
+      case "bad": return Colors.red;
+      default: return Colors.black;
+    }
+  }
+
+  String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 }
