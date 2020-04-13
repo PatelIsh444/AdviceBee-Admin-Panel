@@ -81,6 +81,17 @@ class _HomeState extends State<Home> {
               child: Configuration(),
             )
           ),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.all(25),
+              child: Container(
+                color: Colors.black,
+              ),
+            )
+          ),
         ],
       ),
       tabs: [
@@ -95,7 +106,11 @@ class _HomeState extends State<Home> {
         BottomNavigationBarItem(
           title: Text("Configuration"),
           icon: Icon(Icons.settings),
-        )
+        ),
+        BottomNavigationBarItem(
+          title: Text("Ratings"),
+          icon: Icon(Icons.rate_review),
+        ),
       ],
       currentIndex: _currentIndex,
       onTap: (val) {
