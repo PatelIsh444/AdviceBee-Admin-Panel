@@ -84,11 +84,57 @@ class Ratings extends StatelessWidget {
   }
 
   Widget _buildList(List<DocumentSnapshot> documents) {
-    return ListView.builder(
-      itemCount: documents.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Text(documents[index].data['name'] + ': ' + documents[index].data['message']);
-      }
+    return SingleChildScrollView(
+      child: DataTable(
+        columns: [
+          DataColumn(
+            label: Text(
+              "Name",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 20
+              ),
+            )
+          ),
+          DataColumn(
+            label: Text(
+              "Review",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 20
+              ),
+            )
+          ),
+          DataColumn(
+            label: Text(
+              "Feedback",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 20
+              ),
+            )
+          ),
+        ],
+        rows: _generateRows(documents)
+      )
     );
+  }
+
+  List<DataRow> _generateRows(List<DocumentSnapshot> documents) {
+    List<DataRow> rows = [];
+    documents.forEach((element) {
+      rows.add(DataRow(
+        cells: [
+          DataCell(SingleChildScrollView(child: Text(element['name']))),
+          DataCell(SingleChildScrollView(child: Text(element['type']))),
+          DataCell(SingleChildScrollView(child: Text(element['message']))),
+        ]
+      ));
+    });
+
+    return rows;
   }
 }
