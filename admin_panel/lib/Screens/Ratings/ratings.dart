@@ -5,7 +5,7 @@ class Ratings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Firestore.instance.collectionGroup('review').snapshots(),
+      stream: Firestore.instance.collectionGroup('review').orderBy('dateRated', descending: true).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
           return _buildLayout(snapshot.data.documents);
