@@ -1,5 +1,6 @@
 import 'package:admin_panel/Screens/Configuration/configuration.dart';
 import 'package:admin_panel/Screens/Overview/overview.dart';
+import 'package:admin_panel/Screens/Ratings/ratings.dart';
 import 'package:admin_panel/Screens/Reports/reports.dart';
 import 'package:admin_panel/Services/authentication_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -81,6 +82,15 @@ class _HomeState extends State<Home> {
               child: Configuration(),
             )
           ),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.all(25),
+              child: Ratings()
+            )
+          ),
         ],
       ),
       tabs: [
@@ -95,7 +105,11 @@ class _HomeState extends State<Home> {
         BottomNavigationBarItem(
           title: Text("Configuration"),
           icon: Icon(Icons.settings),
-        )
+        ),
+        BottomNavigationBarItem(
+          title: Text("Ratings"),
+          icon: Icon(Icons.rate_review),
+        ),
       ],
       currentIndex: _currentIndex,
       onTap: (val) {
