@@ -14,8 +14,7 @@ class Overview extends StatelessWidget {
 
   Widget _generateOverview() {
     return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: <Widget>[
           Text(
             "Overview",

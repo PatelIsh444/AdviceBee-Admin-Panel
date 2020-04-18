@@ -5,6 +5,7 @@ import 'package:admin_panel/Services/authentication_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:navigation_rail/navigation_rail.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final user = Provider.of<FirebaseUser>(context);
 
-    return NavigationRail(
+    return NavRail(
       hideTitleBar: true,
       title: Text("Admin Panel"),
       drawerHeaderBuilder: (context) {
